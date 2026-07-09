@@ -1,0 +1,11 @@
+server:
+  port: 0
+
+daffodil:
+  schema: ${user.dir}/schemas/CYO_SMPREQ.xsd
+  samples-dir: ${user.dir}/samples
+
+logging:
+  level:
+    root: WARN
+    com.example.dfdl: INFO

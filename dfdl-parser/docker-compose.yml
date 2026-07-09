@@ -1,0 +1,14 @@
+services:
+  dfdl-parser:
+    build: .
+    container_name: dfdl-parser
+    ports:
+      - "8080:8080"
+    environment:
+      DAFFODIL_SCHEMA: /app/schema/CYO_SMPREQ.xsd
+      DAFFODIL_SAMPLES_DIR: /app/samples
+      LOGGING_LEVEL_COM_EXAMPLE_DFDL: DEBUG
+    volumes:
+      - ./schemas:/app/schema
+      - ./samples:/app/samples
+    restart: unless-stopped

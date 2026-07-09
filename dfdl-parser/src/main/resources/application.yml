@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dfdl-parser
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+daffodil:
+  schema: ${DAFFODIL_SCHEMA:/app/schema/CYO_SMPREQ.xsd}
+  samples-dir: ${DAFFODIL_SAMPLES_DIR:/app/samples}
+
+logging:
+  level:
+    root: INFO
+    com.example.dfdl: DEBUG
+    org.apache.daffodil: INFO
