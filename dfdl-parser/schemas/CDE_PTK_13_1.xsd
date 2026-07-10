@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+
+	<xsd:include schemaLocation="CDE_Common.xsd"/>
+
+    	<xsd:element dfdl:terminator="' %#28; or %#x1c;" ibmSchExtn:docRoot="true" name="PTK_13_1" type="TYPE_PTK_13.1"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+		<xsd:complexType name="TYPE_PTK_13.1">
+		<xsd:sequence dfdl:separator="+ %#29; or %#x1d;">
+			<xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+				<xsd:annotation>
+					<xsd:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:discriminator message="PTK required">{. eq "PTK"}
+						</dfdl:discriminator>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C664" type="TYPE_C664"/>
+   			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL5379" type="TYPE_EL5379"/>
+   			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C310" type="TYPE_C310"/>
+   			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C306" type="TYPE_C306"/>
+   			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C665" type="TYPE_C665"/>
+   			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C666a_13.1" type="TYPE_C666_13.1"/>
+   			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C666b_13.1" type="TYPE_C666_13.1"/>
+   			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL7402" type="TYPE_EL7402"/>
+            <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" dfdl:textNumberPattern="#0" minOccurs="0" name="EL5004" type="TYPE_EL5004"/>
+        </xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

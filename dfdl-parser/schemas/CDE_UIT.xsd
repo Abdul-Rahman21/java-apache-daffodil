@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+    	<xsd:include schemaLocation="CDE_Common.xsd"/>
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+
+	
+    	<xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="UIT" type="TYPE_UIT"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+		<xsd:complexType name="TYPE_UIT">
+		<xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+			<xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+				<xsd:annotation>
+					<xsd:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:discriminator message="UIT required">{.eq "UIT"}</dfdl:discriminator>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+	                                            <xsd:element name="EL0340_InteractiveMsgRefNum" type="xsd:string"/>
+            <xsd:element name="EL0074_NumOfSegInMsg" type="TYPE_EL0074"/>
+                                                </xsd:sequence>
+	</xsd:complexType>
+
+		
+</xsd:schema>

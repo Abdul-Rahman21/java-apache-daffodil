@@ -2,10 +2,12 @@ package com.example.dfdl.service;
 
 import com.example.dfdl.config.DaffodilConfiguration.DaffodilProperties;
 import com.example.dfdl.dto.ParseResponse;
+import com.example.dfdl.dto.SeatMapRequest;
 import com.example.dfdl.exception.DfdlParseException;
 import com.example.dfdl.exception.DfdlSchemaException;
 import com.example.dfdl.util.XmlJsonConverter;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.apache.daffodil.japi.Compiler;
 import org.apache.daffodil.japi.Daffodil;
@@ -40,15 +42,23 @@ public class DaffodilParserService {
 
     private final DaffodilProperties properties;
     private final XmlJsonConverter xmlJsonConverter;
+    private final SeatMapRequestMapper seatMapRequestMapper;
+    private final ObjectMapper objectMapper;
 
     private volatile DataProcessor dataProcessor;
     private volatile boolean schemaCompiled;
     private volatile String schemaFileName;
     private volatile String schemaAbsolutePath;
 
-    public DaffodilParserService(DaffodilProperties properties, XmlJsonConverter xmlJsonConverter) {
+    public DaffodilParserService(
+            DaffodilProperties properties,
+            XmlJsonConverter xmlJsonConverter,
+            SeatMapRequestMapper seatMapRequestMapper,
+            ObjectMapper objectMapper) {
         this.properties = properties;
         this.xmlJsonConverter = xmlJsonConverter;
+        this.seatMapRequestMapper = seatMapRequestMapper;
+        this.objectMapper = objectMapper;
     }
 
     @PostConstruct
@@ -139,10 +149,12 @@ public class DaffodilParserService {
         long start = System.nanoTime();
         try {
             String xml = parseToXml(dataProcessor, binaryData);
-            JsonNode json = xmlJsonConverter.xmlToJson(xml);
+            JsonNode infoset = xmlJsonConverter.xmlToJson(xml);
+            SeatMapRequest seatMapRequest = seatMapRequestMapper.map(infoset);
+            JsonNode mappedJson = objectMapper.valueToTree(seatMapRequest);
             long elapsedMs = (System.nanoTime() - start) / 1_000_000L;
             log.info("Parsing finished successfully in {} ms", elapsedMs);
-            return ParseResponse.ok(xml, json);
+            return ParseResponse.ok(xml, mappedJson, infoset);
         } catch (DfdlParseException ex) {
             long elapsedMs = (System.nanoTime() - start) / 1_000_000L;
             log.warn("Parsing failed after {} ms: {}", elapsedMs, ex.getMessage());

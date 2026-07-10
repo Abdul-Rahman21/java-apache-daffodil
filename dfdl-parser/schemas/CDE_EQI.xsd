@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+                <xsd:include schemaLocation="CDE_Common.xsd"/>
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+        <xsd:complexType name="TYPE_EQI">
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d;">
+      <xsd:element ref="SegmentId">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:discriminator message="EQI required">{.eq "EQI"}</dfdl:discriminator>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="5" minOccurs="0" name="C048" type="TYPE_C048">
+              </xsd:element>
+                            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL8179_TransportTypeId" type="TYPE_EL8179"/>
+            <xsd:element minOccurs="0" name="C361" type="TYPE_C361"/>
+                            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL4440_FreeText" type="TYPE_EL4440"/>
+        </xsd:sequence>
+  </xsd:complexType>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element dfdl:terminator="' %#28; or %#x1c;" ibmSchExtn:docRoot="true" name="EQI" type="TYPE_EQI">
+			</xsd:element>
+
+</xsd:schema>

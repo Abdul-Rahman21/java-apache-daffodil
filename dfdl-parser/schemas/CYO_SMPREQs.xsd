@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sample DFDL schema used for local/Docker verification.
+  Replace this file with your IBM ACE DFDL schema (and any imports) under ./schemas.
+  With docker compose, schema changes are picked up after container restart — no image rebuild required.
+
+  Uses Apache Daffodil's built-in GeneralFormat defaults from the classpath.
+-->
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+    elementFormDefault="unqualified">
+
+  <xs:include schemaLocation="/org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
+
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format ref="GeneralFormat"
+                   representation="binary"
+                   byteOrder="bigEndian"
+                   bitOrder="mostSignificantBitFirst"
+                   binaryNumberRep="binary"
+                   encoding="US-ASCII"
+                   lengthUnits="bytes"
+                   alignment="1"
+                   alignmentUnits="bytes"
+                   occursCountKind="implicit"
+                   sequenceKind="ordered"
+                   documentFinalTerminatorCanBeMissing="yes"/>
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:element name="CYO_SMPREQ" dfdl:lengthKind="implicit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="msgId" type="xs:unsignedInt"
+                    dfdl:lengthKind="explicit"
+                    dfdl:length="4"
+                    dfdl:representation="binary"/>
+        <xs:element name="msgType" type="xs:string"
+                    dfdl:lengthKind="explicit"
+                    dfdl:length="4"
+                    dfdl:representation="text"
+                    dfdl:encoding="US-ASCII"/>
+        <xs:element name="payload" type="xs:string"
+                    dfdl:lengthKind="explicit"
+                    dfdl:length="5"
+                    dfdl:representation="text"
+                    dfdl:encoding="US-ASCII"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

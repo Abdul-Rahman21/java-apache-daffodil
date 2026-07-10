@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    
+  
+  <xsd:include schemaLocation="CDE_UNZ_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNB_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UIT.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UIH.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNH_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_CHD.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_SRP_13_1.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_ROD.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_CBD.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_FDR.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_EQD.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_ERD.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_RAD.xsd"/>
+    	
+  
+  <xsd:include schemaLocation="CDE_WAD.xsd"/>
+    	
+  
+  <xsd:annotation>
+        		
+    
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            			
+      
+      <dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat" separator=""/>
+            		
+    
+    </xsd:appinfo>
+        	
+  
+  </xsd:annotation>
+    	
+  
+  <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" ibmSchExtn:docRoot="true" name="DCRSMF">
+        		
+    
+    <xsd:complexType>
+            			
+      
+      <xsd:sequence dfdl:separator="" dfdl:separatorSuppressionPolicy="anyEmpty">
+                				
+        
+        <xsd:element minOccurs="0" name="hostToHostHdr">
+                    					
+          
+          <xsd:complexType>
+                        						
+            
+            <xsd:choice>
+                            							
+              
+              <xsd:element dfdl:terminator="VGYA%LF;" name="extraHdr1" type="xsd:string"/>
+                            							
+              
+              <xsd:element dfdl:terminator="VSYA%LF;" name="extraHdr2" type="xsd:string"/>
+                            						
+            
+            </xsd:choice>
+                        					
+          
+          </xsd:complexType>
+                    				
+        
+        </xsd:element>
+                				
+        
+        <xsd:element ref="UNB"/>
+                				
+        
+        <xsd:choice>
+                    					
+          
+          <xsd:element ref="UNH"/>
+                    					
+          
+          <xsd:element ref="UIH"/>
+                    				
+        
+        </xsd:choice>
+                				
+        
+        <xsd:element maxOccurs="2" name="DCRSMFGroup1">
+                    				  
+          
+          <xsd:complexType>
+                        					
+            
+            <xsd:sequence dfdl:separator="">
+                            						
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" name="FDR" type="TYPE_FDR"/>
+                            						
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" name="RAD" type="TYPE_RAD"/>
+                            						
+              
+              <xsd:element minOccurs="0" ref="CHD"/>
+                            						
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" minOccurs="0" name="ERD" type="TYPE_ERD"/>
+                            						
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" minOccurs="0" name="WAD" type="TYPE_WAD"/>
+                            						
+              
+              <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="SRP"/>
+                            						
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" minOccurs="0" name="EQD" type="TYPE_EQD"/>
+                            						
+              
+              <!-- <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" maxOccurs="9" minOccurs="0" name="CBD" type="TYPE_CBD"/>
+						<xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28; or %#x1c;" maxOccurs="999" minOccurs="0" name="ROD" type="TYPE_ROD"/> -->
+                            						
+              
+              <xsd:element maxOccurs="9" minOccurs="0" name="DCRSMFGroup2">
+                                                
+                
+                <xsd:complexType>
+                                                      
+                  
+                  <xsd:sequence>
+                                                            
+                    
+                    <xsd:element maxOccurs="3" ref="CBD"/>
+                                           
+                                    
+                  
+                  </xsd:sequence>
+                                                    
+                
+                </xsd:complexType>
+                                              
+              
+              </xsd:element>
+                            			  
+			   
+              
+              <xsd:element maxOccurs="999" minOccurs="0" name="DCRSMFGroup3">
+                                                
+                
+                <xsd:complexType>
+                                                      
+                  
+                  <xsd:sequence>
+                                                            
+                    
+                    <xsd:element ref="ROD"/>
+                                                          
+                  
+                  </xsd:sequence>
+                                                    
+                
+                </xsd:complexType>
+                                              
+              
+              </xsd:element>
+                            					
+            
+            </xsd:sequence>
+                        				  
+          
+          </xsd:complexType>
+                    				
+        
+        </xsd:element>
+                				
+        
+        <xsd:choice>
+                    					
+          
+          <xsd:element dfdl:terminator="' %#28; or %#x1c;" name="UNT" type="TYPE_UNT_13_1"/>
+                    					
+          
+          <xsd:element ref="UIT"/>
+                    				
+        
+        </xsd:choice>
+                				
+        
+        <xsd:element ref="UNZ"/>
+                				
+        
+        <xsd:element minOccurs="0" name="ExtraChar" type="xsd:string"/>
+                			
+      
+      </xsd:sequence>
+            		
+    
+    </xsd:complexType>
+        	
+  
+  </xsd:element>
+    
+
+</xsd:schema>

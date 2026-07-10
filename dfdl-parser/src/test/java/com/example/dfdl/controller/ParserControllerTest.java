@@ -60,8 +60,9 @@ class ParserControllerTest {
     @Test
     void parse_validUpload_returnsSuccessPayload() throws Exception {
         ObjectNode json = new ObjectMapper().createObjectNode();
-        json.put("msgType", "REQ1");
-        ParseResponse response = ParseResponse.ok("<CYO_SMPREQ><msgType>REQ1</msgType></CYO_SMPREQ>", json);
+        json.put("ChannelId", "4101");
+        json.put("ChannelName", "1A");
+        ParseResponse response = ParseResponse.ok("<SMPREQ/>", json);
 
         when(parserService.parse(any(byte[].class))).thenReturn(response);
 
@@ -75,7 +76,7 @@ class ParserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.xml").exists())
-                .andExpect(jsonPath("$.json.msgType").value("REQ1"));
+                .andExpect(jsonPath("$.json.ChannelId").value("4101"));
     }
 
     @Test
@@ -98,13 +99,13 @@ class ParserControllerTest {
     @Test
     void parseSample_delegatesToService() throws Exception {
         ObjectNode json = new ObjectMapper().createObjectNode();
-        json.put("payload", "HELLO");
-        when(parserService.parseSampleFile(eq("sample_smpreq.bin")))
-                .thenReturn(ParseResponse.ok("<root/>", json));
+        json.put("ChannelId", "4101");
+        when(parserService.parseSampleFile(eq("Request_SMPREQ_1.bin")))
+                .thenReturn(ParseResponse.ok("<SMPREQ/>", json));
 
-        mockMvc.perform(post("/parse/sample/sample_smpreq.bin"))
+        mockMvc.perform(post("/parse/sample/Request_SMPREQ_1.bin"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.json.payload").value("HELLO"));
+                .andExpect(jsonPath("$.json.ChannelId").value("4101"));
     }
 }

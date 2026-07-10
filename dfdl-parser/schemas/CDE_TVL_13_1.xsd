@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+
+	<xsd:include schemaLocation="CDE_Common.xsd"/>
+
+    	<xsd:element dfdl:terminator="' %#28; or %#x1c;" ibmSchExtn:docRoot="true" name="TVL" type="TYPE_TVL"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+		<xsd:complexType name="TYPE_TVL">
+		<xsd:sequence dfdl:separator="+ %#29; or %#x1d;" dfdl:separatorSuppressionPolicy="trailingEmpty">
+			<xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+				<xsd:annotation>
+					<xsd:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:discriminator message="TVL required">{. eq "TVL"}
+						</dfdl:discriminator>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			            			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C310" type="TYPE_C310"/>
+            			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C328a" type="TYPE_C328"/>
+            			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C328b" type="TYPE_C328"/>
+            			            			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C306" type="TYPE_C306"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C308" type="TYPE_C308"/>
+                        			            			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C309" type="TYPE_C309"/>
+                       			            		                        <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL1082" type="xsd:string"/>
+                                    <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL7365" type="TYPE_EL7365"/>
+                                                                                    <xsd:element dfdl:occursCountKind="implicit" maxOccurs="99" minOccurs="0" name="C311" type="TYPE_C311"/>
+                                                                    </xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="TYPE_C311">
+		<xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+			            			<xsd:element dfdl:emptyValueDelimiterPolicy="none" dfdl:lengthKind="delimited" dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL5479a">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="3"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+ 	<xsd:element dfdl:emptyValueDelimiterPolicy="none" dfdl:lengthKind="delimited" dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL9995">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="10"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+                                    <xsd:element dfdl:emptyValueDelimiterPolicy="none" dfdl:lengthKind="delimited" dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL1082">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="6"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+            <xsd:element dfdl:emptyValueDelimiterPolicy="none" dfdl:lengthKind="delimited" dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL5479b">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="3"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+                     		                    <xsd:element dfdl:emptyValueDelimiterPolicy="none" dfdl:lengthKind="delimited" dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL9906" type="TYPE_EL9906"/>
+                            </xsd:sequence>
+	</xsd:complexType>
+		
+	
+		
+																									
+</xsd:schema>

@@ -8,18 +8,30 @@ public class ParseResponse {
 
     private boolean success;
     private String xml;
+    /**
+     * Mapped downstream seat-map request JSON (Request_seatmaprequest_2.txt shape).
+     */
     private JsonNode json;
+    /**
+     * Raw DFDL infoset JSON before business mapping.
+     */
+    private JsonNode infoset;
     private String error;
 
     public ParseResponse() {
     }
 
-    public static ParseResponse ok(String xml, JsonNode json) {
+    public static ParseResponse ok(String xml, JsonNode mappedJson, JsonNode infoset) {
         ParseResponse response = new ParseResponse();
         response.success = true;
         response.xml = xml;
-        response.json = json;
+        response.json = mappedJson;
+        response.infoset = infoset;
         return response;
+    }
+
+    public static ParseResponse ok(String xml, JsonNode json) {
+        return ok(xml, json, null);
     }
 
     public static ParseResponse failure(String error) {
@@ -51,6 +63,14 @@ public class ParseResponse {
 
     public void setJson(JsonNode json) {
         this.json = json;
+    }
+
+    public JsonNode getInfoset() {
+        return infoset;
+    }
+
+    public void setInfoset(JsonNode infoset) {
+        this.infoset = infoset;
     }
 
     public String getError() {

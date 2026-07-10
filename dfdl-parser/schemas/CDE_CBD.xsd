@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+                <xsd:include schemaLocation="CDE_Common.xsd"/>
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+        <xsd:complexType name="TYPE_CBD">
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+                              <xsd:element ref="SegmentId">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:discriminator message="CBD required">{.eq "CBD"}</dfdl:discriminator>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+            <xsd:element name="C342" type="TYPE_C342">
+              </xsd:element>
+                                                    <xsd:element name="C052" type="TYPE_C052">
+              </xsd:element>
+                                                        <xsd:element minOccurs="0" name="EL9863_CabinClassLocation" type="xsd:string"/>
+                                                        <xsd:element minOccurs="0" name="C053" type="TYPE_C053"/>
+                                                <xsd:element minOccurs="0" name="EL9883_SeatOccupationInd" type="xsd:string"/>
+                                                                            <xsd:element minOccurs="0" name="C058" type="TYPE_C058"/>
+                                                        <xsd:element maxOccurs="12" minOccurs="0" name="C054" type="TYPE_C054"/>
+                                    </xsd:sequence>
+  </xsd:complexType>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="CBD" type="TYPE_CBD">
+			</xsd:element>
+
+</xsd:schema>

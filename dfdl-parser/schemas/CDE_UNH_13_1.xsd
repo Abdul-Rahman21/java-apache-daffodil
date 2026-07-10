@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  	
+  <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+  	
+  <xsd:include schemaLocation="CDE_Common.xsd"/>
+      		
+  <xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="UNH" type="TYPE_UNH"/>
+      
+  <xsd:complexType name="TYPE_UNH">
+    		
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+      			
+      <xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+        				
+        <xsd:annotation>
+          					
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            						
+            <dfdl:discriminator message="UNH required">{. eq "UNH"}
+						</dfdl:discriminator>
+            					
+          </xsd:appinfo>
+          				
+        </xsd:annotation>
+        			
+      </xsd:element>
+      			                        						
+      <xsd:element dfdl:representation="text" name="EL0062_MsgRefNumber" type="TYPE_EL0062"/>
+                  
+      <xsd:element dfdl:representation="text" name="S009" type="TYPE_S009"/>
+                                          			                        		        
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL0068_CommonAccessRef" type="TYPE_EL0068"/>
+                  
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="S010" type="TYPE_S010"/>
+              
+    </xsd:sequence>
+    	
+  </xsd:complexType>
+  				
+		
+		
+		
+		
+		
+		
+  <xsd:complexType name="TYPE_S010">
+    		
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+                  						                        		        
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0070_TransferSequence" type="xsd:string"/>
+                  
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL0073_FirstAndLastTransfer">
+                
+        <xsd:simpleType>
+                    
+          <xsd:restriction base="xsd:string">
+                        
+            <xsd:maxLength value="1"/>
+                      
+          </xsd:restriction>
+                  
+        </xsd:simpleType>
+              
+      </xsd:element>
+                                  
+    </xsd:sequence>
+    	
+  </xsd:complexType>
+  		
+		
+	
+  <xsd:annotation>
+    		
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+      			
+      <dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+      		
+    </xsd:appinfo>
+    	
+  </xsd:annotation>
+  		
+
+</xsd:schema>

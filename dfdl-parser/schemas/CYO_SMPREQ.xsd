@@ -1,54 +1,275 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Sample DFDL schema used for local/Docker verification.
-  Replace this file with your IBM ACE DFDL schema (and any imports) under ./schemas.
-  With docker compose, schema changes are picked up after container restart — no image rebuild required.
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    
+  
+  <xsd:include schemaLocation="CDE_UNZ_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNB_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UIT.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UIH.xsd">
+	</xsd:include>
+    	
 
-  Uses Apache Daffodil's built-in GeneralFormat defaults from the classpath.
--->
-<xs:schema
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
-    elementFormDefault="unqualified">
+  
+  <xsd:include schemaLocation="CDE_ABI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_CVR_13_1.xsd">
+	</xsd:include>
+    
+  
+  <xsd:include schemaLocation="CDE_EQI.xsd">
+	</xsd:include>
+    	
 
-  <xs:include schemaLocation="/org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
+  
+  <xsd:include schemaLocation="CDE_FQU.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_MPD.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_MSG_13_1.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_RCI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TKT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TVL_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNH_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_DAT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_FAR_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_FTI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_ORG_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_RPI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TIF_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_AAI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_RAD.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_SRP_13_1.xsd"/>
+            
+      
+    
+  <xsd:complexType name="DummyHeader">
+    <xsd:sequence dfdl:separator="%NEL;" dfdl:separatorPosition="postfix">
+      <xsd:element maxOccurs="3" minOccurs="0" name="DUMMY" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+      
+  <xsd:annotation>
+        		
+    
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            			
+      
+      <dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+            		
+    
+    </xsd:appinfo>
+        	
+  
+  </xsd:annotation>
+    	
+  
+  <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" ibmSchExtn:docRoot="true" name="SMPREQ">
+        		
+    
+    <xsd:complexType>
+            			
+      
+      <xsd:sequence dfdl:separator="" dfdl:separatorSuppressionPolicy="anyEmpty">
+                                							
+        
+        <xsd:element minOccurs="0" name="hostToHostHdr">
+                              
+          
+          <xsd:complexType>
+                                                                      
+            
+            <xsd:choice>
+                                          
+              
+              <xsd:element dfdl:terminator="VGYA%LF;" name="extraHdr1" type="xsd:string"/>
+                                          
+              
+              <xsd:element dfdl:terminator="VSYA%LF;" name="extraHdr2" type="xsd:string"/>
+                                        
+            
+            </xsd:choice>
+                                            
+          
+          </xsd:complexType>
+                            
+        
+        </xsd:element>
+                                                
+                        
+                
+        <xsd:element minOccurs="0" name="DummyHeader" type="DummyHeader"/>
+                        
+        <xsd:element ref="UNB"/>
+                                                                
+                
+        <xsd:choice>
+                              
+          
+          <xsd:element ref="UNH"/>
+                              
+          
+          <xsd:element ref="UIH"/>
+                            
+        
+        </xsd:choice>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="MSG"/>
+                                                                
+                
+        <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" minOccurs="0" name="ORG" type="TYPE_ORG_13_1"/>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="TVL"/>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="SRP"/>
+                                                                
+                
+        <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" minOccurs="0" name="RPI" type="TYPE_RPI_13.1"/>
+                                                                
+                
+        <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" minOccurs="0" name="FTI" type="TYPE_FTI_13.1"/>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="RCI"/>
+                                                                
+                
+        <xsd:element minOccurs="0" ref="EQI"/>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="MPD"/>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="ABI"/>
+                                                                
+                
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="CVR"/>
+                                                                
+                
+        <xsd:element maxOccurs="99" minOccurs="0" name="SMPREQGroup1">
+                              
+          
+          <xsd:complexType>
+                                    
+            
+            <xsd:sequence dfdl:separator="">
+                                          
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" name="TIF" type="TYPE_TIF_13_1"/>
+                                          
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" maxOccurs="99" minOccurs="0" name="FTI" type="TYPE_FTI_13.1"/>
+                                          
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" minOccurs="0" name="FAR" type="TYPE_FAR_13.1"/>
+                                          
+              
+              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:terminator="' %#28;" minOccurs="0" name="DAT" type="TYPE_DAT_13_1"/>
+                                          
+              
+              <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="TKT"/>
+                                          
+              
+              <xsd:element minOccurs="0" ref="FQU"/>
+                                        
+            
+            </xsd:sequence>
+                                  
+          
+          </xsd:complexType>
+                            
+        
+        </xsd:element>
+                                                                
+                
+        <xsd:choice>
+                              
+          
+          <xsd:element dfdl:terminator="' %#28;" name="UNT" type="TYPE_UNT_13_1"/>
+                              
+          
+          <xsd:element ref="UIT"/>
+                            
+        
+        </xsd:choice>
+                                                                
+                
+        <xsd:element ref="UNZ"/>
+                                                                
+                
+        <xsd:element minOccurs="0" name="ExtraChar" type="xsd:string"/>
+                                                        
+                                              
+      </xsd:sequence>
+            		
+    
+    </xsd:complexType>
+        	
+  
+  </xsd:element>
+    
 
-  <xs:annotation>
-    <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="GeneralFormat"
-                   representation="binary"
-                   byteOrder="bigEndian"
-                   bitOrder="mostSignificantBitFirst"
-                   binaryNumberRep="binary"
-                   encoding="US-ASCII"
-                   lengthUnits="bytes"
-                   alignment="1"
-                   alignmentUnits="bytes"
-                   occursCountKind="implicit"
-                   sequenceKind="ordered"
-                   documentFinalTerminatorCanBeMissing="yes"/>
-    </xs:appinfo>
-  </xs:annotation>
-
-  <xs:element name="CYO_SMPREQ" dfdl:lengthKind="implicit">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="msgId" type="xs:unsignedInt"
-                    dfdl:lengthKind="explicit"
-                    dfdl:length="4"
-                    dfdl:representation="binary"/>
-        <xs:element name="msgType" type="xs:string"
-                    dfdl:lengthKind="explicit"
-                    dfdl:length="4"
-                    dfdl:representation="text"
-                    dfdl:encoding="US-ASCII"/>
-        <xs:element name="payload" type="xs:string"
-                    dfdl:lengthKind="explicit"
-                    dfdl:length="5"
-                    dfdl:representation="text"
-                    dfdl:encoding="US-ASCII"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-</xs:schema>
+</xsd:schema>

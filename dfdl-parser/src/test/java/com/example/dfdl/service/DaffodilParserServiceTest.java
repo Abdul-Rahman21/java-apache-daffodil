@@ -39,7 +39,12 @@ class DaffodilParserServiceTest {
         properties.setSchema(schemaPath.toString());
         properties.setSamplesDir(samplesDir.toString());
 
-        service = new DaffodilParserService(properties, new XmlJsonConverter(new ObjectMapper()));
+        ObjectMapper objectMapper = new ObjectMapper();
+        service = new DaffodilParserService(
+                properties,
+                new XmlJsonConverter(objectMapper),
+                new SeatMapRequestMapper(properties),
+                objectMapper);
         service.compileConfiguredSchema();
     }
 
@@ -51,17 +56,25 @@ class DaffodilParserServiceTest {
     }
 
     @Test
-    void parse_validBinary_returnsXmlAndJson() throws Exception {
-        byte[] binary = Files.readAllBytes(samplesDir.resolve("sample_smpreq.bin"));
+    void parse_validBinary_returnsMappedSeatMapJson() throws Exception {
+        byte[] binary = Files.readAllBytes(samplesDir.resolve("Request_SMPREQ_1.bin"));
 
         ParseResponse response = service.parse(binary);
 
         assertTrue(response.isSuccess());
         assertNotNull(response.getXml());
-        assertTrue(response.getXml().contains("CYO_SMPREQ") || response.getXml().contains("msgType"));
+        assertTrue(response.getXml().contains("SMPREQ") || response.getXml().contains("UNB"));
         assertNotNull(response.getJson());
-        assertTrue(response.getJson().toString().contains("REQ1")
-                || response.getJson().toString().contains("HELLO"));
+        assertEquals("4101", response.getJson().path("ChannelId").asText());
+        assertEquals("1A", response.getJson().path("ChannelName").asText());
+        assertEquals("USD", response.getJson().path("CurrencyCode").asText());
+        assertTrue(response.getJson().path("FlightSegments").isArray());
+        assertEquals("LAX", response.getJson().path("FlightSegments").get(0)
+                .path("DepartureAirport").path("IataCode").asText());
+        assertEquals("DEN", response.getJson().path("FlightSegments").get(0)
+                .path("ArrivalAirport").path("IataCode").asText());
+        assertEquals("2026-12-21", response.getJson().path("FlightSegments").get(0)
+                .path("DepartureDateTime").asText());
     }
 
     @Test
@@ -80,9 +93,10 @@ class DaffodilParserServiceTest {
 
     @Test
     void parseSampleFile_readsFromSamplesDirectory() {
-        ParseResponse response = service.parseSampleFile("sample_smpreq.bin");
+        ParseResponse response = service.parseSampleFile("Request_SMPREQ_1.bin");
         assertTrue(response.isSuccess());
         assertNotNull(response.getJson());
+        assertTrue(response.getJson().has("FlightSegments"));
     }
 
     @Test
@@ -91,8 +105,12 @@ class DaffodilParserServiceTest {
         properties.setSchema(tempDir.resolve("missing.xsd").toString());
         properties.setSamplesDir(samplesDir.toString());
 
-        DaffodilParserService missingService =
-                new DaffodilParserService(properties, new XmlJsonConverter(new ObjectMapper()));
+        ObjectMapper objectMapper = new ObjectMapper();
+        DaffodilParserService missingService = new DaffodilParserService(
+                properties,
+                new XmlJsonConverter(objectMapper),
+                new SeatMapRequestMapper(properties),
+                objectMapper);
 
         DfdlSchemaException ex = assertThrows(DfdlSchemaException.class, missingService::compileConfiguredSchema);
         assertTrue(ex.getMessage().contains("not found"));
@@ -101,7 +119,7 @@ class DaffodilParserServiceTest {
 
     @Test
     void parse_inputStream_delegatesSuccessfully() throws Exception {
-        byte[] binary = Files.readAllBytes(samplesDir.resolve("sample_smpreq.bin"));
+        byte[] binary = Files.readAllBytes(samplesDir.resolve("Request_SMPREQ_1.bin"));
         ParseResponse response = service.parse(new java.io.ByteArrayInputStream(binary));
         assertTrue(response.isSuccess());
         assertTrue(new String(response.getXml().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8)

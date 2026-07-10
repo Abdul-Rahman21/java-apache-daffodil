@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    
+    
+  <xsd:include schemaLocation="CDE_UNB_13_1.xsd"/>
+      
+  <xsd:include schemaLocation="CDE_AAI_13_1.xsd"/>
+      
+  <xsd:include schemaLocation="CDE_UNZ_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNB_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UIT.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UIH.xsd">
+	</xsd:include>
+    	
+
+  
+  <xsd:include schemaLocation="CDE_ABI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_CVR_13_1.xsd">
+	</xsd:include>
+    
+  
+  <xsd:include schemaLocation="CDE_EQI.xsd">
+	</xsd:include>
+    	
+
+  
+  <xsd:include schemaLocation="CDE_FQU.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_MPD.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_MSG_13_1.xsd">
+	</xsd:include>
+    	
+	
+  
+  <xsd:include schemaLocation="CDE_RCI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TKT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TVL_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_UNH_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_DAT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_FAR_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_FTI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_ORG_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_RPI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TIF_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_AAI_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_RAD.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_APD_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_CBD.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_CBF.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_DUM_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_DUM_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_EQN_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_ERD.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_IFT_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_ITM_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_REF_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_ROD.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_TXD_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_WAD.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_EQI_BLOB.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_MON_13_1.xsd">
+	</xsd:include>
+    	
+  
+  <xsd:include schemaLocation="CDE_PTK_13_1.xsd">
+	</xsd:include>
+    	
+	
+	
+	
+	
+	
+	
+	
+	
+  
+  <xsd:include schemaLocation="CDE_SRP_13_1.xsd"/>
+                
+  
+  <xsd:annotation>
+        		
+    
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            			
+      
+      <dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+            		
+    
+    </xsd:appinfo>
+        	
+  
+  </xsd:annotation>
+    	
+  
+  <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM500" ibmSchExtn:docRoot="true" name="SMPRES">
+        		
+    
+    <xsd:complexType>
+            			
+      
+      <xsd:sequence dfdl:separator="" dfdl:separatorSuppressionPolicy="anyEmpty">
+                                                							                                
+        
+        <xsd:element minOccurs="0" name="hostToHostHdr">
+                              
+          
+          <xsd:complexType>
+                                    
+            
+            <xsd:choice>
+                                          
+              
+              <xsd:element dfdl:terminator="VGYA%LF;" name="extraHdr1" type="xsd:string"/>
+                                          
+              
+              <xsd:element dfdl:terminator="VSYA%LF;" name="extraHdr2" type="xsd:string"/>
+                                        
+            
+            </xsd:choice>
+                                  
+          
+          </xsd:complexType>
+                            
+        
+        </xsd:element>
+                                                                                                
+        
+        <xsd:element ref="UNB"/>
+                                                                                                                                
+        
+        <xsd:choice>
+                              
+          
+          <xsd:element ref="UNH"/>
+                              
+          
+          <xsd:element ref="UIH"/>
+                            
+        
+        </xsd:choice>
+                                                                                                                                
+        
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="MSG"/>
+                                                                                                                                
+        
+        <xsd:element dfdl:terminator="' %#28;" minOccurs="0" name="ORG" type="TYPE_ORG_13_1"/>
+                                                                                                                                                            
+        
+        <xsd:element minOccurs="0" ref="RAD"/>
+                                                                                                                                
+        
+        <xsd:element minOccurs="0" ref="ERD"/>
+                                                                                                                                                                            
+        
+        <xsd:element minOccurs="0" ref="WAD"/>
+                                                                                                                                                                
+        
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="SRP"/>
+                                                                                                                                                                            
+        
+        <xsd:element maxOccurs="5" minOccurs="0" name="SMPRESGroup1">
+                              
+          
+          <xsd:complexType>
+                                    
+            
+            <xsd:sequence dfdl:separator="">
+                                          
+              
+              <xsd:element ref="TVL"/>
+                                          
+              
+              <xsd:element minOccurs="0" ref="ERD"/>
+                                          
+              
+              <xsd:element minOccurs="0" ref="WAD"/>
+                                          
+              
+              <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="APD"/>
+                                                                                                                                                                                                                          
+              
+              <xsd:element dfdl:terminator="' %#28;" minOccurs="0" name="EQI" type="TYPE_EQI_BLOB"/>
+                                                        
+              
+              <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="AAI"/>
+                                                                                                                                                                                                    
+              
+              <xsd:element maxOccurs="9" minOccurs="0" name="SMPRESGroup2">
+                                                
+                
+                <xsd:complexType>
+                                                      
+                  
+                  <xsd:sequence dfdl:separator="">
+                                                            
+                    
+                    <xsd:element ref="CBD"/>
+                                                            
+                    
+                    <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="EQN"/>
+                                                                                                  
+                    
+                    <xsd:element minOccurs="0" ref="CBF"/>
+                                                                            
+                  
+                  </xsd:sequence>
+                                                    
+                
+                </xsd:complexType>
+                                              
+              
+              </xsd:element>
+                                                                                                                                                                                                                            
+              
+              <xsd:element maxOccurs="999" minOccurs="0" name="SMPRESGroup3">
+                                                
+                
+                <xsd:complexType>
+                                                      
+                  
+                  <xsd:sequence dfdl:separator="">
+                                                            
+                    
+                    <xsd:element ref="ROD"/>
+                                                            
+                    
+                    <xsd:element maxOccurs="9" minOccurs="0" ref="CBF"/>
+                                                          
+                  
+                  </xsd:sequence>
+                                                    
+                
+                </xsd:complexType>
+                                              
+              
+              </xsd:element>
+                                                                                                                                                                                                                            
+              
+              <xsd:element dfdl:occursCountKind="implicit" maxOccurs="2" minOccurs="0" ref="IFT"/>
+                                                                                                                                                                                                    
+              
+              <xsd:element maxOccurs="99" minOccurs="0" name="SMPRESGroup4">
+                                                
+                
+                <xsd:complexType>
+                                                      
+                  
+                  <xsd:sequence dfdl:separator="">
+                                                            
+                    
+                    <xsd:element ref="DUM"/>
+                                                            
+                    
+                    <xsd:element dfdl:terminator="' %#28;" maxOccurs="99" minOccurs="0" name="TIF" type="TYPE_TIF_13_1"/>
+                                                            
+                    
+                    <xsd:element maxOccurs="999" name="SMPRESGroup5">
+                                                                  
+                      
+                      <xsd:complexType>
+                                                                        
+                        
+                        <xsd:sequence dfdl:separator="">
+                                                                              
+                          
+                          <xsd:element dfdl:terminator="' %#28;" name="MON" type="TYPE_MON_13.1"/>
+                                                                              
+                          
+                          <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="TXD"/>
+                                                                              
+                          
+                          <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="REF"/>
+                                                                              
+                          
+                          <xsd:element dfdl:terminator="' %#28;" minOccurs="0" name="PTK" type="TYPE_PTK_13.1"/>
+                                                                              
+                          
+                          <xsd:element maxOccurs="999" ref="ROD"/>
+                                                                            
+                        
+                        </xsd:sequence>
+                                                                      
+                      
+                      </xsd:complexType>
+                                                                
+                    
+                    </xsd:element>
+                                                          
+                  
+                  </xsd:sequence>
+                                                    
+                
+                </xsd:complexType>
+                                              
+              
+              </xsd:element>
+                                                                                                                                                                                                    
+              
+              <xsd:element maxOccurs="999" minOccurs="0" name="SMPRESGroup6">
+                                                
+                
+                <xsd:complexType>
+                                                      
+                  
+                  <xsd:sequence dfdl:separator="">
+                                                            
+                    
+                    <xsd:element ref="ITM"/>
+                                                            
+                    
+                    <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="IFT"/>
+                                                          
+                  
+                  </xsd:sequence>
+                                                    
+                
+                </xsd:complexType>
+                                              
+              
+              </xsd:element>
+                                                                                                                                                                                    
+            
+            </xsd:sequence>
+                                  
+          
+          </xsd:complexType>
+                            
+        
+        </xsd:element>
+                                                                                                                                                                        
+        
+        <xsd:choice>
+                              
+          
+          <xsd:element dfdl:terminator="' %#28;" name="UNT" type="TYPE_UNT_13_1"/>
+                              
+          
+          <xsd:element ref="UIT"/>
+                            
+        
+        </xsd:choice>
+                                                                                                                                
+        
+        <xsd:element ref="UNZ"/>
+                                                                                                                                
+        
+        <xsd:element minOccurs="0" name="ExtraChar" type="xsd:string"/>
+                                                                                                                
+      
+      </xsd:sequence>
+            		
+    
+    </xsd:complexType>
+        	
+  
+  </xsd:element>
+    
+
+</xsd:schema>

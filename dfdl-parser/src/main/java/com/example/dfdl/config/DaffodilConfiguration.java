@@ -30,6 +30,19 @@ public class DaffodilConfiguration {
          */
         private String samplesDir = "/app/samples";
 
+        /**
+         * Default ChannelId for mapped seat-map JSON (not present in EDIFACT SMPREQ).
+         */
+        private String channelId = "4101";
+
+        private String defaultChannelName = "1A";
+
+        private String defaultCurrencyCode = "USD";
+
+        private String defaultClassOfService = "Y";
+
+        private String defaultPricing = "true";
+
         public String getSchema() {
             return schema;
         }
@@ -44,6 +57,46 @@ public class DaffodilConfiguration {
 
         public void setSamplesDir(String samplesDir) {
             this.samplesDir = samplesDir;
+        }
+
+        public String getChannelId() {
+            return channelId;
+        }
+
+        public void setChannelId(String channelId) {
+            this.channelId = channelId;
+        }
+
+        public String getDefaultChannelName() {
+            return defaultChannelName;
+        }
+
+        public void setDefaultChannelName(String defaultChannelName) {
+            this.defaultChannelName = defaultChannelName;
+        }
+
+        public String getDefaultCurrencyCode() {
+            return defaultCurrencyCode;
+        }
+
+        public void setDefaultCurrencyCode(String defaultCurrencyCode) {
+            this.defaultCurrencyCode = defaultCurrencyCode;
+        }
+
+        public String getDefaultClassOfService() {
+            return defaultClassOfService;
+        }
+
+        public void setDefaultClassOfService(String defaultClassOfService) {
+            this.defaultClassOfService = defaultClassOfService;
+        }
+
+        public String getDefaultPricing() {
+            return defaultPricing;
+        }
+
+        public void setDefaultPricing(String defaultPricing) {
+            this.defaultPricing = defaultPricing;
         }
     }
 }

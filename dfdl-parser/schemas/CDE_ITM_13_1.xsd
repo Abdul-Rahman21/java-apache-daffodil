@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+
+	<xsd:include schemaLocation="CDE_Common.xsd"/>
+
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format byteOrder="bigEndian" encoding="US-ASCII" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element dfdl:terminator="' %#28; or %#x1c;" name="ITM" type="TYPE_ITM"/>
+	<xsd:complexType name="TYPE_ITM">
+		<xsd:sequence dfdl:separator="+ %#29; or %#x1d;">
+			<xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+				<xsd:annotation>
+					<xsd:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:discriminator message="ITM required">{. eq "ITM"}
+						</dfdl:discriminator>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element maxOccurs="1" minOccurs="1" ref="C212a"/>
+			<xsd:element dfdl:occursCountKind="implicit" maxOccurs="98" minOccurs="0" ref="C212b"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="C212a" type="TYPE_C212"/>
+	<xsd:element name="C212b" type="TYPE_C212"/>
+
+	<xsd:complexType name="TYPE_C212">
+		<xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+			            			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL7140" type="TYPE_EL7140"/>
+            			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL7143" type="TYPE_EL7143"/>
+            			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL1131" type="TYPE_EL1131"/>
+            		<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL3055" type="TYPE_EL3055"/>
+        </xsd:sequence>
+	</xsd:complexType>
+
+
+</xsd:schema>

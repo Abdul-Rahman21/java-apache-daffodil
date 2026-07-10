@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+
+	<xsd:include schemaLocation="CDE_Common.xsd"/>
+
+    	<xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="SRP" type="TYPE_SRP"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+		<xsd:complexType name="TYPE_SRP">
+		<xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+			<xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+				<xsd:annotation>
+					<xsd:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:discriminator message="SRP required">{. eq "SRP"}
+						</dfdl:discriminator>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			            			            			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C334" type="TYPE_C334"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="C047" type="TYPE_C047"/>
+                                    			            <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL7365" type="TYPE_EL7365"/>
+            			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL1154" type="TYPE_EL1154"/>
+            		<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL4440" type="TYPE_EL4440"/>
+        </xsd:sequence>
+	</xsd:complexType>
+
+	
+	<xsd:complexType name="TYPE_C344">
+		<xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+			            			            			            			<xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL9854">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+            <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL9807">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+                                                			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL9873" type="xsd:string"/>
+            <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL9992" type="TYPE_EL9992"/>
+                        		            <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" maxOccurs="5" minOccurs="0" name="EL9825" type="TYPE_EL9825"/>
+                            </xsd:sequence>
+	</xsd:complexType>
+
+	
+	
+	
+	
+	
+	
+
+	
+	<xsd:complexType name="TYPE_C047">
+		<xsd:sequence dfdl:separator=": %#31; or %#x1f;" dfdl:separatorSuppressionPolicy="trailingEmpty">
+			            			            			            		                        <xsd:element name="EL9830" type="xsd:string"/>
+                                    <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL6804" type="xsd:string"/>
+            <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" maxOccurs="20" minOccurs="0" name="EL9831">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+                                    </xsd:sequence>
+	</xsd:complexType>
+
+	
+	
+	
+	
+	
+	
+
+</xsd:schema>

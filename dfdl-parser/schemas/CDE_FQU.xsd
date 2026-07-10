@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+                <xsd:include schemaLocation="CDE_Common.xsd"/>
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+        <xsd:complexType name="TYPE_FQU">
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d;">
+      <xsd:element ref="SegmentId">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:discriminator message="FQU required">{.eq "FQU"}</dfdl:discriminator>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="EL8335_MoveType" type="TYPE_EL8335"/>
+      <xsd:element minOccurs="0" name="C647" type="TYPE_C647">
+              </xsd:element>
+                <xsd:element minOccurs="0" name="C662" type="TYPE_C662"/>
+                    <xsd:element minOccurs="0" name="C646" type="TYPE_C646">
+              </xsd:element>
+                    <xsd:element dfdl:terminator="' %#28; or %#x1c;" maxOccurs="9" minOccurs="0" name="C648" type="TYPE_C648">
+              </xsd:element>
+        </xsd:sequence>
+  </xsd:complexType>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element dfdl:terminator="' %#28; or %#x1c;" ibmSchExtn:docRoot="true" name="FQU" type="TYPE_FQU">
+			</xsd:element>
+
+</xsd:schema>

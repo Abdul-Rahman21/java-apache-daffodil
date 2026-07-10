@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        	
+  
+  <xsd:include schemaLocation="CDE_Common.xsd"/>
+        
+  
+  <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+    
+  
+  <!-- <xsd:element dfdl:terminator="' %#28;" ibmSchExtn:docRoot="true" name="UNB" type="TYPE_UNB"/> mtf -->
+    	
+   	
+  
+  <xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="UNB" type="TYPE_UNB"/>
+        
+  
+  <xsd:complexType name="TYPE_UNB">
+        
+    
+    <!--     <xsd:sequence dfdl:separator="+ %#29;"> mtf -->
+            
+    
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+                  
+      
+      <xsd:element dfdl:representation="text" name="SegmentId">
+                                        
+        
+        <xsd:annotation>
+                              
+          
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                                    
+            
+            <dfdl:discriminator>{. eq "UNB"}</dfdl:discriminator>
+                                  
+          
+          </xsd:appinfo>
+                            
+        
+        </xsd:annotation>
+                                
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="3"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                  
+      
+      <xsd:element  name="S001" type="TYPE_S001"/>
+                                    
+      
+      <xsd:element name="S002" type="TYPE_S002"/>
+                        
+      
+      <xsd:element  name="S003" type="TYPE_S003"/>
+                                          
+      
+      <xsd:element  name="S004" type="TYPE_S004"/>
+                                          
+      
+      <xsd:element dfdl:representation="text"  name="EL0020_InterchangeRef">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="14"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                                          
+      
+      <xsd:element dfdl:occursCountKind="implicit"  minOccurs="0" name="S005" type="TYPE_S005"/>
+                                          
+      
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text"  minOccurs="0" name="EL0026">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="14"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                                                            
+      
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL0029">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="1"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                                                                                          
+      
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0031" type="xsd:string"/>
+                                                
+      
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL0032">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="35"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                                                                                                                                      
+      
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0035_TestIndicator" type="TYPE_EL0035"/>
+                                        
+    
+    </xsd:sequence>
+          
+  
+  </xsd:complexType>
+    		
+		
+  
+  <xsd:complexType name="TYPE_S001">
+        
+    
+    <!-- <xsd:sequence dfdl:separator=": %#31;"> mtf -->
+        		
+    
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+                        						            		                                    
+      
+      <xsd:element dfdl:representation="text" name="EL0001">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="4"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                                            
+      
+      <xsd:element name="EL0002" type="xsd:string"/>
+                    
+    
+    </xsd:sequence>
+        	
+  
+  </xsd:complexType>
+    		
+		
+		
+  
+  <xsd:complexType name="TYPE_S004">
+        
+    
+    <!-- <xsd:sequence dfdl:separator=": %#31;"> mtf -->
+        		
+    
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+                        						            		                                
+      
+      <xsd:element name="EL0017" type="xsd:string"/>
+                        
+      
+      <xsd:element dfdl:representation="text" dfdl:textNumberPattern="#0" name="EL0019" type="xsd:string">
+              </xsd:element>
+                                        
+    
+    </xsd:sequence>
+        	
+  
+  </xsd:complexType>
+    		
+  
+  <xsd:complexType name="TYPE_S005">
+        
+    
+    <!-- <xsd:sequence dfdl:separator=": %#31;"> mtf -->
+        		
+    
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+                        								
+      
+      <xsd:element dfdl:representation="text" name="EL0022">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="14"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                        
+      
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" minOccurs="0" name="EL0025">
+                        
+        
+        <xsd:simpleType>
+                              
+          
+          <xsd:restriction base="xsd:string">
+                                    
+            
+            <xsd:maxLength value="2"/>
+                                  
+          
+          </xsd:restriction>
+                            
+        
+        </xsd:simpleType>
+                      
+      
+      </xsd:element>
+                    
+    
+    </xsd:sequence>
+        	
+  
+  </xsd:complexType>
+        
+  
+  <xsd:annotation>
+        		
+    
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            			
+      
+      <dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+            		
+    
+    </xsd:appinfo>
+        	
+  
+  </xsd:annotation>
+    		
+		
+		
+		
+		
+		
+		
+			
+				
+		
+		
+		
+		
+			
+		
+					
+
+
+</xsd:schema>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      	
+  <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+      
+  <xsd:include schemaLocation="CDE_Common.xsd"/>
+      
+  <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+  	
+  <xsd:include schemaLocation="CDE_Common.xsd"/>
+  	
+  <xsd:annotation>
+    		
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+      			
+      <dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+      		
+    </xsd:appinfo>
+    	
+  </xsd:annotation>
+  	
+  <xsd:element dfdl:terminator="' %#28; or %#x1c;" name="AAI" type="TYPE_AAI"/>
+  	
+  <xsd:complexType name="TYPE_AAI">
+    		
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d;">
+      			
+      <xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+        				
+        <xsd:annotation>
+          					
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            						
+            <dfdl:discriminator message="AAI required">{. eq "AAI"}
+						</dfdl:discriminator>
+            					
+          </xsd:appinfo>
+          				
+        </xsd:annotation>
+        			
+      </xsd:element>
+      			
+      <xsd:element maxOccurs="1" minOccurs="1" ref="C997a"/>
+      			
+      <xsd:element dfdl:occursCountKind="implicit" maxOccurs="19" minOccurs="0" ref="C997b"/>
+      		
+    </xsd:sequence>
+    	
+  </xsd:complexType>
+  	
+  <xsd:element name="C997a" type="TYPE_C997"/>
+  	
+  <xsd:element name="C997b" type="TYPE_C997"/>
+  	
+  <xsd:complexType name="TYPE_C997">
+    		
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+      			            			
+      <xsd:element dfdl:representation="text" name="EL1154" type="TYPE_EL1154"/>
+                  
+      <xsd:element dfdl:escapeSchemeRef="" maxOccurs="1" minOccurs="1" ref="EL9143"/>
+      			
+      <xsd:element dfdl:escapeSchemeRef="" dfdl:occursCountKind="implicit" maxOccurs="1" minOccurs="0" ref="EL7904"/>
+      			
+      <xsd:element dfdl:escapeSchemeRef="" dfdl:occursCountKind="implicit" maxOccurs="1" minOccurs="0" ref="EL7907"/>
+      			            		
+      <xsd:element dfdl:occursCountKind="implicit" dfdl:representation="text" maxOccurs="99" minOccurs="0" name="EL9960" type="TYPE_EL9960"/>
+              
+    </xsd:sequence>
+    	
+  </xsd:complexType>
+  	
+  <xsd:element name="EL9143" nillable="false" type="TYPE_EL9143"/>
+  	
+  <xsd:simpleType name="TYPE_EL9143">
+    		
+    <xsd:restriction base="xsd:string">
+      			
+      <xsd:maxLength value="3"/>
+      		
+    </xsd:restriction>
+    	
+  </xsd:simpleType>
+  	
+  <xsd:element name="EL7904" nillable="false" type="TYPE_EL7904"/>
+  	
+  <xsd:simpleType name="TYPE_EL7904">
+    		
+    <xsd:restriction base="xsd:string">
+      			
+      <xsd:maxLength value="10"/>
+      		
+    </xsd:restriction>
+    	
+  </xsd:simpleType>
+  	
+  <xsd:element name="EL7907" nillable="false" type="TYPE_EL7907"/>
+  	
+  <xsd:simpleType name="TYPE_EL7907">
+    		
+    <xsd:restriction base="xsd:string">
+      			
+      <xsd:maxLength value="3"/>
+      		
+    </xsd:restriction>
+    	
+  </xsd:simpleType>
+  
+</xsd:schema>

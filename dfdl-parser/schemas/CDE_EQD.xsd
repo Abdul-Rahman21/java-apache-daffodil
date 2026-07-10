@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                      
+  
+  
+  <xsd:include schemaLocation="CDE_Common.xsd"/>
+          
+  
+  
+  <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+              
+  
+  
+  <xsd:complexType name="TYPE_EQD">
+                
+    
+    
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+                        
+      
+      
+      <xsd:element ref="SegmentId">
+                                
+        
+        
+        <xsd:annotation>
+                                        
+          
+          
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                                                
+            
+            
+            <dfdl:discriminator message="EQD required">{.eq "EQD"}</dfdl:discriminator>
+                                              
+          
+          
+          </xsd:appinfo>
+                                      
+        
+        
+        </xsd:annotation>
+                              
+      
+      
+      </xsd:element>
+                                  
+      
+      
+      <xsd:element maxOccurs="3" minOccurs="0" name="C048" type="TYPE_C048"/>
+                              
+      
+      
+      <xsd:element minOccurs="0" name="EL7800_EquipmentCode">
+                                
+        
+        
+        <xsd:simpleType>
+                                        
+          
+          
+          <xsd:restriction base="xsd:string">
+                                                
+            
+            
+            <xsd:maxLength value="3"/>
+                                              
+          
+          
+          </xsd:restriction>
+                                      
+        
+        
+        </xsd:simpleType>
+                              
+      
+      
+      </xsd:element>
+                              
+      
+      
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL9866_AircraftCabinVersionId" type="TYPE_EL9866"/>
+                              
+      
+                              
+      
+                              
+      
+                                          
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL4440_FreeTextExtra" type="TYPE_EL4440"/>
+                          
+    
+    
+    </xsd:sequence>
+              
+  
+  
+  </xsd:complexType>
+          
+  
+  
+  <xsd:annotation>
+            		
+    
+    
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                  			
+      
+      
+      <dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+                  		
+    
+    
+    </xsd:appinfo>
+            	
+  
+  
+  </xsd:annotation>
+      	
+  
+  
+  <xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="EQD" type="TYPE_EQD">
+			</xsd:element>
+      
+
+
+</xsd:schema>

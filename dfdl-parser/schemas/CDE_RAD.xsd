@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+                <xsd:include schemaLocation="CDE_Common.xsd"/>
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+        <xsd:complexType name="TYPE_RAD">
+    <xsd:sequence dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" dfdl:separator="+ %#29; or %#x1d; or %HT;">
+                  <xsd:element ref="SegmentId">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:discriminator message="RAD required">{.eq "RAD"}</dfdl:discriminator>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+            <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" name="EL9868_ResponseType" type="xsd:string"/>
+                              <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" name="EL9869_ProcessStatusCode" type="xsd:string"/>
+                        </xsd:sequence>
+  </xsd:complexType>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="RAD" type="TYPE_RAD">
+			</xsd:element>
+
+</xsd:schema>

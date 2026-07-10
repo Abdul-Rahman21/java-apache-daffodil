@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+    	<xsd:include schemaLocation="CDE_Common.xsd"/>
+    <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+
+      
+            
+            <xsd:element dfdl:alignment="1" dfdl:alignmentUnits="bytes" dfdl:byteOrder="bigEndian" dfdl:emptyValueDelimiterPolicy="initiator" dfdl:encoding="IBM037" dfdl:fillByte="0" dfdl:ignoreCase="no" dfdl:leadingSkip="0" dfdl:lengthKind="delimited" dfdl:outputNewLine="%CR;%LF;" dfdl:terminator="' %#28; or %#x1c; or %BS;" dfdl:trailingSkip="0" ibmSchExtn:docRoot="true" name="UIH" type="TYPE_UIH"/>
+    
+    <xsd:complexType name="TYPE_UIH">
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+                              <xsd:annotation>
+        <xsd:appinfo source="http://www.ogf.org/dfdl/"/>
+      </xsd:annotation>
+                                    <xsd:element ref="SegmentId"/>
+            <xsd:element name="S306" type="TYPE_S306"/>
+                                                      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0340_InteractiveMsgRef" type="xsd:string"/>
+                                                      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="S302" type="TYPE_S302"/>
+                                                      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="S301" type="TYPE_S301"/>
+                                                      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="S300" type="TYPE_S300"/>
+                                                      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0035_TestIndicator" type="xsd:string"/>
+                                            </xsd:sequence>
+  </xsd:complexType>
+    <xsd:complexType name="TYPE_S300">
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0339_ExtendedDate" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0314_EvenTime" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0337_TimeOffset" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+    <xsd:complexType name="TYPE_S301">
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0320_MsgSequenceNum" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0323_MessagePosition" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0325_DuplicateIndicator" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+    <xsd:complexType name="TYPE_S302">
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+      <xsd:element name="EL0300_InitiatorControlRef" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0303_InitiatorRefId" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0051_ControlAgency" type="xsd:string"/>
+      <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0304_ResponderControlRef" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+    <xsd:complexType name="TYPE_S306">
+    <xsd:sequence dfdl:separator=": %#31; or %#x1f;">
+      <xsd:element name="EL0065_MessageType" type="TYPE_EL0065"/>
+      <xsd:element name="EL0312_VersionNumber" type="xsd:string"/>
+      <xsd:element name="EL0316_ReleaseNumber" type="xsd:string"/>
+                  <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0326_MessageFunc" type="xsd:string"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0051_ControlAgency" type="TYPE_EL0051_13_1"/>
+                              <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL0057_AssociationAssigned" type="xsd:string"/>
+                        </xsd:sequence>
+  </xsd:complexType>
+   	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+
+
+</xsd:schema>

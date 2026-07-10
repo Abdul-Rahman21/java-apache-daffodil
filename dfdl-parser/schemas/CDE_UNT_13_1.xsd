@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  	
+  <xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+  	
+  <xsd:include schemaLocation="CDE_Common.xsd"/>
+      	
+  <xsd:element dfdl:terminator="' %#28; or %#x1c;" ibmSchExtn:docRoot="true" name="UNT_13_1" type="TYPE_UNT_13_1"/>
+      
+  <xsd:annotation>
+    		
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+      			
+      <dfdl:format byteOrder="bigEndian" encoding="IBM037" escapeSchemeRef="recSepFieldsFmt:RecordEscapeScheme" occursCountKind="fixed" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+      		
+    </xsd:appinfo>
+    	
+  </xsd:annotation>
+  		
+  <xsd:complexType name="TYPE_UNT_13_1">
+    		
+    <xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+      			
+      <xsd:element maxOccurs="1" minOccurs="1" ref="SegmentId">
+        				
+        <xsd:annotation>
+          					
+          <xsd:appinfo source="http://www.ogf.org/dfdl/">
+            						
+            <dfdl:discriminator message="UNT required">{. eq "UNT"}
+						</dfdl:discriminator>
+            					
+          </xsd:appinfo>
+          				
+        </xsd:annotation>
+        			
+      </xsd:element>
+      	                                
+      <xsd:element name="EL0074_13.1" type="xsd:string"/>
+                  
+      <xsd:element dfdl:representation="text" name="EL0062" type="TYPE_EL0062"/>
+                                  
+    </xsd:sequence>
+    	
+  </xsd:complexType>
+  		
+
+</xsd:schema>

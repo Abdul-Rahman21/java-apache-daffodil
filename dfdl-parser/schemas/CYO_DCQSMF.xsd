@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2021 rel. 2 sp1 (x64) (http://www.altova.com) by  (United Airlines) --><xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_UNZ_13_1.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_UNB_13_1.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_UNT_13_1.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_UIT.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_UIH.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_UNH_13_1.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_LOR.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_FDQ.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_CHD.xsd">
+	</xsd:include>
+      	
+  
+  
+  <xsd:include schemaLocation="CDE_SRP_13_1.xsd"/>
+      	
+  
+          
+  <xsd:annotation>
+            		
+    
+    
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                  			
+      
+      
+      <dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+                  		
+    
+    
+    </xsd:appinfo>
+            	
+  
+  
+  </xsd:annotation>
+      	
+  
+  
+  <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" ibmSchExtn:docRoot="true" name="DCQSMF">
+            		
+    
+    
+    <xsd:complexType>
+                  			
+      
+      
+      <xsd:sequence dfdl:separator="" dfdl:separatorSuppressionPolicy="anyEmpty">
+                        				
+        
+        
+        <xsd:element minOccurs="0" name="hostToHostHdr">
+                              					
+          
+          
+          <xsd:complexType>
+                                    						
+            
+            
+            <xsd:choice>
+                                          							
+              
+              
+              <xsd:element dfdl:terminator="VGYA%LF;" name="extraHdr1" type="xsd:string"/>
+                                          							
+              
+              
+              <xsd:element dfdl:terminator="VSYA%LF;" name="extraHdr2" type="xsd:string"/>
+                                          						
+            
+            
+            </xsd:choice>
+                                    					
+          
+          
+          </xsd:complexType>
+                              				
+        
+        
+        </xsd:element>
+                        				
+                
+        
+        <xsd:element dfdl:terminator="%CR;" minOccurs="0" name="DUMMY1" type="xsd:string"/>
+                                
+        
+        <xsd:element dfdl:terminator="%CR;" minOccurs="0" name="DUMMY2" type="xsd:string"/>
+                                
+        
+        <xsd:element dfdl:terminator="%CR;" minOccurs="0" name="DUMMY3" type="xsd:string"/>
+                                
+        
+        <xsd:element ref="UNB"/>
+                        				
+                
+        
+        <xsd:choice>
+                              					
+          
+          
+          <xsd:element ref="UNH"/>
+                              					
+          
+          
+          <xsd:element ref="UIH"/>
+                              				
+        
+        
+        </xsd:choice>
+                        				
+                
+        
+        <xsd:element ref="LOR"/>
+                        				
+                
+        
+        <xsd:element ref="FDQ"/>
+                        				
+                
+        
+        <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="SRP"/>
+                        				
+                
+        
+        <xsd:element minOccurs="0" ref="CHD"/>
+                        				
+                
+        
+        <xsd:choice>
+                              					
+          
+          
+          <xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS; or %HT;" name="UNT" type="TYPE_UNT_13_1"/>
+                              					
+          
+          
+          <xsd:element ref="UIT"/>
+                              				
+        
+        
+        </xsd:choice>
+                        				
+                
+        
+        <xsd:element ref="UNZ"/>
+                        				
+                
+        
+        <xsd:element minOccurs="0" name="ExtraChar" type="xsd:string"/>
+                        			
+            
+      
+      </xsd:sequence>
+                  		
+    
+    
+    </xsd:complexType>
+            	
+  
+  
+  </xsd:element>
+      
+
+
+</xsd:schema>

@@ -1,0 +1,22 @@
+{
+    "ChannelId": "4101",
+    "ChannelName": "1A",
+    "CurrencyCode": "USD",
+    "RecordLocator": "",
+    "ProductCode": "",
+    "FlightSegments": [{
+        "DepartureAirport": {
+            "IataCode": "LAX"
+        },
+        "ArrivalAirport": {
+            "IataCode": "DEN"
+        },
+        "DepartureDateTime": "2026-12-21",
+        "MarketingAirlineCode": "UA",
+        "OperatingAirlineCode": "UA",
+        "FlightNumber": 1275,
+        "OperatingFlightNumber": 1275,
+        "ClassOfService": "Y",
+        "Pricing": "true"
+    }]
+}

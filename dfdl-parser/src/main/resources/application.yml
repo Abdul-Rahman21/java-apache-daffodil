@@ -12,6 +12,11 @@ spring:
 daffodil:
   schema: ${DAFFODIL_SCHEMA:/app/schema/CYO_SMPREQ.xsd}
   samples-dir: ${DAFFODIL_SAMPLES_DIR:/app/samples}
+  channel-id: ${DAFFODIL_CHANNEL_ID:4101}
+  default-channel-name: ${DAFFODIL_CHANNEL_NAME:1A}
+  default-currency-code: ${DAFFODIL_CURRENCY:USD}
+  default-class-of-service: ${DAFFODIL_CLASS_OF_SERVICE:Y}
+  default-pricing: ${DAFFODIL_PRICING:true}
 
 logging:
   level:

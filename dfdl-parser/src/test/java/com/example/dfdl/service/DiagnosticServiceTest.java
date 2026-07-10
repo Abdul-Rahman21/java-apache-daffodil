@@ -36,7 +36,11 @@ class DiagnosticServiceTest {
         properties.setSamplesDir(samplesDir.toString());
 
         DaffodilParserService parserService =
-                new DaffodilParserService(properties, new XmlJsonConverter(new ObjectMapper()));
+                new DaffodilParserService(
+                        properties,
+                        new XmlJsonConverter(new ObjectMapper()),
+                        new SeatMapRequestMapper(properties),
+                        new ObjectMapper());
         parserService.compileConfiguredSchema();
         diagnosticService = new DiagnosticService(properties, parserService);
     }
@@ -55,7 +59,7 @@ class DiagnosticServiceTest {
 
     @Test
     void diagnose_withValidBinary_reportsParseSuccess() throws Exception {
-        byte[] binary = Files.readAllBytes(samplesDir.resolve("sample_smpreq.bin"));
+        byte[] binary = Files.readAllBytes(samplesDir.resolve("Request_SMPREQ_1.bin"));
 
         DiagnosticResponse response = diagnosticService.diagnose(binary);
 
@@ -82,7 +86,11 @@ class DiagnosticServiceTest {
         properties.setSamplesDir(samplesDir.toString());
 
         DaffodilParserService parserService =
-                new DaffodilParserService(properties, new XmlJsonConverter(new ObjectMapper()));
+                new DaffodilParserService(
+                        properties,
+                        new XmlJsonConverter(new ObjectMapper()),
+                        new SeatMapRequestMapper(properties),
+                        new ObjectMapper());
         DiagnosticService service = new DiagnosticService(properties, parserService);
 
         DiagnosticResponse response = service.diagnose(null);

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:recSepFieldsFmt="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat">
+	<xsd:include schemaLocation="CDE_Common.xsd"/>
+	<xsd:import namespace="http://www.ibm.com/dfdl/RecordSeparatedFieldFormat" schemaLocation="RecordSeparatedFieldFormat.xsd"/>
+	<xsd:complexType name="TYPE_FDQ">
+		<xsd:sequence dfdl:separator="+ %#29; or %#x1d; or %HT;">
+			<xsd:element ref="SegmentId">
+				<xsd:annotation>
+					<xsd:appinfo source="http://www.ogf.org/dfdl/">
+						<dfdl:discriminator message="FDQ required">{. eq "FDQ"}</dfdl:discriminator>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="C013" type="TYPE_C013_1"/>
+			<xsd:element name="C014" type="TYPE_C014"/>
+            <xsd:element name="EL2281_OB_DepartureDateTime" type="TYPE_EL2281"/>
+            <xsd:element name="EL3215_OB_DeparturePlaceCode" type="TYPE_EL3215"/>
+            <xsd:element name="EL3259_OB_DestinationPlaceCode" type="TYPE_EL3259"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL9856_OB_OutboundIndicator" type="TYPE_EL9856"/>
+			<xsd:element minOccurs="0" name="C015" type="TYPE_C015_1"/>
+			<xsd:element minOccurs="0" name="C016" type="TYPE_C016_1"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL2281_IB_DepartureDateTime" type="TYPE_EL2281"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL2107_IB_ArrivalDateTime" type="TYPE_EL2107"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL3215_IB_DeparturePlaceCode" type="TYPE_EL3215"/>
+			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL3259_IB_DestinationPlaceCode" type="TYPE_EL3259"/>
+			<xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL3803_ArrivalTerminal" type="TYPE_EL3803"/>
+            <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" name="EL9857_IB_SvcIndicatorType" type="TYPE_EL9857"/>
+			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format encoding="IBM037" escapeSchemeRef="" occursCountKind="implicit" ref="recSepFieldsFmt:RecordSeparatedFieldsFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element dfdl:terminator="' %#28; or %#x1c; or %BS;" ibmSchExtn:docRoot="true" name="FDQ" type="TYPE_FDQ">
+			</xsd:element>
+</xsd:schema>
