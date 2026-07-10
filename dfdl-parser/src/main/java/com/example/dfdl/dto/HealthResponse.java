@@ -5,14 +5,23 @@ public class HealthResponse {
     private String status;
     private boolean schemaCompiled;
     private String schema;
+    private boolean responseSchemaCompiled;
+    private String responseSchema;
 
     public HealthResponse() {
     }
 
-    public HealthResponse(String status, boolean schemaCompiled, String schema) {
+    public HealthResponse(
+            String status,
+            boolean schemaCompiled,
+            String schema,
+            boolean responseSchemaCompiled,
+            String responseSchema) {
         this.status = status;
         this.schemaCompiled = schemaCompiled;
         this.schema = schema;
+        this.responseSchemaCompiled = responseSchemaCompiled;
+        this.responseSchema = responseSchema;
     }
 
     public String getStatus() {
@@ -37,5 +46,21 @@ public class HealthResponse {
 
     public void setSchema(String schema) {
         this.schema = schema;
+    }
+
+    public boolean isResponseSchemaCompiled() {
+        return responseSchemaCompiled;
+    }
+
+    public void setResponseSchemaCompiled(boolean responseSchemaCompiled) {
+        this.responseSchemaCompiled = responseSchemaCompiled;
+    }
+
+    public String getResponseSchema() {
+        return responseSchema;
+    }
+
+    public void setResponseSchema(String responseSchema) {
+        this.responseSchema = responseSchema;
     }
 }

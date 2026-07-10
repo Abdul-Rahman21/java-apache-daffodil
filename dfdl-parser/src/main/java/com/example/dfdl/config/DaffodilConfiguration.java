@@ -13,7 +13,8 @@ public class DaffodilConfiguration {
     private static final Logger log = LoggerFactory.getLogger(DaffodilConfiguration.class);
 
     public DaffodilConfiguration(DaffodilProperties properties) {
-        log.info("Application startup: Daffodil schema path configured as '{}'", properties.getSchema());
+        log.info("Application startup: Daffodil request schema path configured as '{}'", properties.getSchema());
+        log.info("Application startup: Daffodil response schema path configured as '{}'", properties.getResponseSchema());
         log.info("Application startup: Samples directory configured as '{}'", properties.getSamplesDir());
     }
 
@@ -21,9 +22,14 @@ public class DaffodilConfiguration {
     public static class DaffodilProperties {
 
         /**
-         * Absolute path to the DFDL schema XSD file.
+         * Absolute path to the DFDL request schema XSD (SMPREQ parse).
          */
         private String schema = "/app/schema/CYO_SMPREQ.xsd";
+
+        /**
+         * Absolute path to the DFDL response schema XSD (SMPRES unparse).
+         */
+        private String responseSchema = "/app/schema/CYO_SMPRES.xsd";
 
         /**
          * Directory containing binary sample files available for parse-by-name.
@@ -49,6 +55,14 @@ public class DaffodilConfiguration {
 
         public void setSchema(String schema) {
             this.schema = schema;
+        }
+
+        public String getResponseSchema() {
+            return responseSchema;
+        }
+
+        public void setResponseSchema(String responseSchema) {
+            this.responseSchema = responseSchema;
         }
 
         public String getSamplesDir() {

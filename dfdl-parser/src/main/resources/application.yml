@@ -11,6 +11,7 @@ spring:
 
 daffodil:
   schema: ${DAFFODIL_SCHEMA:/app/schema/CYO_SMPREQ.xsd}
+  response-schema: ${DAFFODIL_RESPONSE_SCHEMA:/app/schema/CYO_SMPRES.xsd}
   samples-dir: ${DAFFODIL_SAMPLES_DIR:/app/samples}
   channel-id: ${DAFFODIL_CHANNEL_ID:4101}
   default-channel-name: ${DAFFODIL_CHANNEL_NAME:1A}

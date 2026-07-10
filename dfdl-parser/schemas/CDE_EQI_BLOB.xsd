@@ -73,7 +73,7 @@
                         
             
       
-      <xsd:element maxOccurs="5" minOccurs="0" name="FILLER" type="xsd:hexBinary"/>
+      <xsd:element maxOccurs="5" minOccurs="0" name="FILLER" type="xsd:string"/>
                         
       
       <xsd:element ibmDfdlExtn:sampleValue="777" maxOccurs="999" minOccurs="0" name="Blob" type="xsd:string"/>

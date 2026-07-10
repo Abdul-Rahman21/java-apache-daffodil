@@ -193,7 +193,7 @@
   </xsd:annotation>
     	
   
-  <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM500" ibmSchExtn:docRoot="true" name="SMPRES">
+  <xsd:element dfdl:byteOrder="bigEndian" dfdl:encoding="IBM037" ibmSchExtn:docRoot="true" name="SMPRES">
         		
     
     <xsd:complexType>
@@ -284,59 +284,13 @@
                                                         
               
               <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="AAI"/>
-                                                                                                                                                                                                    
-              
-              <xsd:element maxOccurs="9" minOccurs="0" name="SMPRESGroup2">
-                                                
-                
-                <xsd:complexType>
-                                                      
-                  
-                  <xsd:sequence dfdl:separator="">
-                                                            
-                    
-                    <xsd:element ref="CBD"/>
-                                                            
-                    
-                    <xsd:element dfdl:occursCountKind="implicit" minOccurs="0" ref="EQN"/>
-                                                                                                  
-                    
-                    <xsd:element minOccurs="0" ref="CBF"/>
-                                                                            
-                  
-                  </xsd:sequence>
-                                                    
-                
-                </xsd:complexType>
-                                              
-              
-              </xsd:element>
-                                                                                                                                                                                                                            
-              
-              <xsd:element maxOccurs="999" minOccurs="0" name="SMPRESGroup3">
-                                                
-                
-                <xsd:complexType>
-                                                      
-                  
-                  <xsd:sequence dfdl:separator="">
-                                                            
-                    
-                    <xsd:element ref="ROD"/>
-                                                            
-                    
-                    <xsd:element maxOccurs="9" minOccurs="0" ref="CBF"/>
-                                                          
-                  
-                  </xsd:sequence>
-                                                    
-                
-                </xsd:complexType>
-                                              
-              
-              </xsd:element>
-                                                                                                                                                                                                                            
-              
+
+              <!-- Flattened from SMPRESGroup2 for Apache Daffodil unparse compatibility -->
+              <xsd:element maxOccurs="9" minOccurs="0" ref="CBD"/>
+
+              <!-- Flattened from SMPRESGroup3 for Apache Daffodil unparse compatibility -->
+              <xsd:element maxOccurs="999" minOccurs="0" ref="ROD"/>
+
               <xsd:element dfdl:occursCountKind="implicit" maxOccurs="2" minOccurs="0" ref="IFT"/>
                                                                                                                                                                                                     
               

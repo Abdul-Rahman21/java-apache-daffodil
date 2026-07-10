@@ -3,6 +3,7 @@ package com.example.dfdl.controller;
 import com.example.dfdl.dto.HealthResponse;
 import com.example.dfdl.dto.ParseResponse;
 import com.example.dfdl.service.DaffodilParserService;
+import com.example.dfdl.service.DaffodilUnparserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -24,18 +25,24 @@ public class ParserController {
     private static final Logger log = LoggerFactory.getLogger(ParserController.class);
 
     private final DaffodilParserService parserService;
+    private final DaffodilUnparserService unparserService;
 
-    public ParserController(DaffodilParserService parserService) {
+    public ParserController(DaffodilParserService parserService, DaffodilUnparserService unparserService) {
         this.parserService = parserService;
+        this.unparserService = unparserService;
     }
 
     @GetMapping("/health")
     public HealthResponse health() {
-        boolean compiled = parserService.isSchemaCompiled();
+        boolean requestCompiled = parserService.isSchemaCompiled();
+        boolean responseCompiled = unparserService.isSchemaCompiled();
+        boolean up = requestCompiled && responseCompiled;
         return new HealthResponse(
-                compiled ? "UP" : "DOWN",
-                compiled,
-                parserService.getSchemaFileName());
+                up ? "UP" : "DOWN",
+                requestCompiled,
+                parserService.getSchemaFileName(),
+                responseCompiled,
+                unparserService.getSchemaFileName());
     }
 
     /**

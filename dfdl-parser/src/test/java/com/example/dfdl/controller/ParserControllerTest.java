@@ -4,6 +4,7 @@ import com.example.dfdl.dto.ParseResponse;
 import com.example.dfdl.exception.DfdlParseException;
 import com.example.dfdl.exception.GlobalExceptionHandler;
 import com.example.dfdl.service.DaffodilParserService;
+import com.example.dfdl.service.DaffodilUnparserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.Test;
@@ -34,22 +35,31 @@ class ParserControllerTest {
     @MockitoBean
     private DaffodilParserService parserService;
 
+    @MockitoBean
+    private DaffodilUnparserService unparserService;
+
     @Test
     void health_returnsUpWhenSchemaCompiled() throws Exception {
         when(parserService.isSchemaCompiled()).thenReturn(true);
         when(parserService.getSchemaFileName()).thenReturn("CYO_SMPREQ.xsd");
+        when(unparserService.isSchemaCompiled()).thenReturn(true);
+        when(unparserService.getSchemaFileName()).thenReturn("CYO_SMPRES.xsd");
 
         mockMvc.perform(get("/health"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("UP"))
                 .andExpect(jsonPath("$.schemaCompiled").value(true))
-                .andExpect(jsonPath("$.schema").value("CYO_SMPREQ.xsd"));
+                .andExpect(jsonPath("$.schema").value("CYO_SMPREQ.xsd"))
+                .andExpect(jsonPath("$.responseSchemaCompiled").value(true))
+                .andExpect(jsonPath("$.responseSchema").value("CYO_SMPRES.xsd"));
     }
 
     @Test
     void health_returnsDownWhenSchemaNotCompiled() throws Exception {
         when(parserService.isSchemaCompiled()).thenReturn(false);
         when(parserService.getSchemaFileName()).thenReturn("CYO_SMPREQ.xsd");
+        when(unparserService.isSchemaCompiled()).thenReturn(false);
+        when(unparserService.getSchemaFileName()).thenReturn("CYO_SMPRES.xsd");
 
         mockMvc.perform(get("/health"))
                 .andExpect(status().isOk())

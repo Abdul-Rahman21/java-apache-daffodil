@@ -1,6 +1,8 @@
 # dfdl-parser — Technical Documentation
 
-Spring Boot REST service that accepts an **IBM ACE / EDIFACT binary** (`.bin`), parses it with **Apache Daffodil** using DFDL XSD schemas, maps the result into a **seat-map request JSON**, and returns that JSON in the API response.
+Spring Boot REST service that accepts an **IBM ACE / EDIFACT binary** (`.bin`), parses it with **Apache Daffodil** using DFDL XSD schemas, maps the result into a **seat-map request JSON**, and returns that JSON in the API response. It also **unparses** seat-map **response** JSON back to an SMPRES `.bin`.
+
+For a full design of parse/unparse (classes, schemas, field maps, edge cases, sample files), see **[TECHNICAL_DESIGN.md](./TECHNICAL_DESIGN.md)**.
 
 ---
 
@@ -145,7 +147,47 @@ For each `/parse` call:
 
 ---
 
-## 4. How the response is returned
+## 4. Reverse flow — JSON → binary (`POST /unparse`)
+
+```
+Client
+  │  POST /unparse
+  │  Content-Type: application/json
+  │  body = Respone_seatmapresponse_3.txt shape
+  ▼
+SeatMapResponseMapper  →  SMPRES XML infoset
+  ▼
+Apache Daffodil unparse (CYO_SMPRES.xsd, IBM037)
+  ▼
+HTTP 200  application/octet-stream  (SMPRES.bin)
+```
+
+### Call
+
+```bash
+curl -X POST http://localhost:8080/unparse \
+  -H "Content-Type: application/json" \
+  --data-binary @./samples/Respone_seatmapresponse_3.txt \
+  --output SMPRES.bin
+```
+
+### Mapping (high level)
+
+Aligned with client sample `samples/Response_SMPRES_4.bin` (no `ORG`):
+
+| Seat-map JSON | SMPRES segment / field |
+|---------------|-------------------------|
+| `transactionIdentifiers.channelName` | `UNB` recipient (sender fixed `UA1SM`) |
+| `flightInfo.*` | `TVL` (airports, date, flight `:L`) |
+| `aircraftInfo.icr` | `EQI++++++{icr}` |
+| `cabins[]` (filtered by `cabinCode`) | `CBD` + `ROD` (incl. `Z` / exit `E` rows) |
+
+Details: [TECHNICAL_DESIGN.md §5](./TECHNICAL_DESIGN.md#5-unparse-flow-json--binary).
+
+---
+
+
+### How the response is returned (parse)
 
 ### Success — HTTP 200
 
@@ -264,9 +306,10 @@ docker compose restart
 
 | Method | URL | Purpose |
 |--------|-----|---------|
-| `GET` | `/health` | Schema compile status |
-| `POST` | `/parse` | Binary → mapped seat-map JSON |
+| `GET` | `/health` | Request + response schema compile status |
+| `POST` | `/parse` | Binary → mapped seat-map **request** JSON |
 | `POST` | `/parse/sample/{fileName}` | Parse file from `/app/samples` |
+| `POST` | `/unparse` | Seat-map **response** JSON → SMPRES `.bin` |
 | `POST` | `/diagnose` | ACE/Daffodil compile (+ optional parse) diagnostics |
 
 ---
@@ -278,7 +321,8 @@ docker compose restart
 | Property | Default | Description |
 |----------|---------|-------------|
 | `server.port` | `8080` | HTTP port |
-| `daffodil.schema` | `/app/schema/CYO_SMPREQ.xsd` | Primary DFDL schema |
+| `daffodil.schema` | `/app/schema/CYO_SMPREQ.xsd` | Request DFDL schema (parse) |
+| `daffodil.response-schema` | `/app/schema/CYO_SMPRES.xsd` | Response DFDL schema (unparse) |
 | `daffodil.samples-dir` | `/app/samples` | Sample binaries directory |
 | `daffodil.channel-id` | `4101` | Mapped `ChannelId` |
 | `daffodil.default-channel-name` | `1A` | Fallback `ChannelName` |

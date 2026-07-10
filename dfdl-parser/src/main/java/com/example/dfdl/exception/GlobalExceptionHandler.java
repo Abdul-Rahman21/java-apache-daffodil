@@ -24,6 +24,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ParseResponse.failure(ex.getMessage()));
     }
 
+    @ExceptionHandler(DfdlUnparseException.class)
+    public ResponseEntity<ParseResponse> handleUnparseException(DfdlUnparseException ex) {
+        log.warn("Unparsing failed: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ParseResponse.failure(ex.getMessage()));
+    }
+
     @ExceptionHandler(DfdlSchemaException.class)
     public ResponseEntity<Map<String, Object>> handleSchemaException(DfdlSchemaException ex) {
         log.error("Schema error: {}", ex.getMessage(), ex);
