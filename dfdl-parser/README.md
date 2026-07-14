@@ -157,7 +157,7 @@ Client
   ▼
 SeatMapResponseMapper  →  SMPRES XML infoset
   ▼
-Apache Daffodil unparse (CYO_SMPRES.xsd, IBM037)
+Apache Daffodil unparse (CYO_SMPRES.xsd, **EBCDIC IBM037**)
   ▼
 HTTP 200  application/octet-stream  (SMPRES.bin)
 ```
@@ -310,7 +310,25 @@ docker compose restart
 | `POST` | `/parse` | Binary → mapped seat-map **request** JSON |
 | `POST` | `/parse/sample/{fileName}` | Parse file from `/app/samples` |
 | `POST` | `/unparse` | Seat-map **response** JSON → SMPRES `.bin` |
+| `POST` | `/compare` | Compare client SMPRES `.bin` vs unparse `.bin` |
 | `POST` | `/diagnose` | ACE/Daffodil compile (+ optional parse) diagnostics |
+
+### Compare client binary vs unparse binary
+
+Upload the client-shared response binary and your unparse output:
+
+```bash
+curl.exe -X POST http://127.0.0.1:8080/compare ^
+  -F "clientFile=@./samples/Response_SMPRES_4.bin;type=application/octet-stream" ^
+  -F "unparseFile=@./samples/SMPRES.bin;type=application/octet-stream"
+```
+
+Response includes:
+- `verdict` — `IDENTICAL` / `STRUCTURALLY_MATCHED` / `PARTIAL_MATCH` / `MISMATCH`
+- `matchPercent` — share of checks passed
+- `matches` / `differences` — human-readable lists
+- `checks` — encoding, message type, TVL/EQI/CBD/UNT exactness, ROD skeleton, etc.
+- `segmentDiffs` — per-segment EXACT / STRUCTURAL_MATCH / CONTENT_DIFF
 
 ---
 

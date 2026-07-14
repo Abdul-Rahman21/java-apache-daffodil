@@ -41,6 +41,8 @@ class UnparseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Content-Disposition", "attachment; filename=\"SMPRES.bin\""));
+                .andExpect(header().string("Content-Disposition", "attachment; filename=\"SMPRES.bin\""))
+                .andExpect(header().string("X-DFDL-Binary-Encoding", "IBM037"))
+                .andExpect(header().string("X-DFDL-Binary-Encoding-Name", "EBCDIC"));
     }
 }

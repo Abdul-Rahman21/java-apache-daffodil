@@ -51,7 +51,9 @@ class ParserControllerTest {
                 .andExpect(jsonPath("$.schemaCompiled").value(true))
                 .andExpect(jsonPath("$.schema").value("CYO_SMPREQ.xsd"))
                 .andExpect(jsonPath("$.responseSchemaCompiled").value(true))
-                .andExpect(jsonPath("$.responseSchema").value("CYO_SMPRES.xsd"));
+                .andExpect(jsonPath("$.responseSchema").value("CYO_SMPRES.xsd"))
+                .andExpect(jsonPath("$.binaryEncoding").value("IBM037"))
+                .andExpect(jsonPath("$.binaryEncodingName").value("EBCDIC"));
     }
 
     @Test
