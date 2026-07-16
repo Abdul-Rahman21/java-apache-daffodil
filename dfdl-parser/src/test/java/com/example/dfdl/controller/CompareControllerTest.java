@@ -34,6 +34,7 @@ class CompareControllerTest {
         response.setSuccess(true);
         response.setVerdict("STRUCTURALLY_MATCHED");
         response.setMatchPercent(90);
+        response.setMismatchPercent(10);
         response.setSummary("ACE layout matches");
 
         when(binaryCompareService.compare(any(), anyString(), any(), anyString())).thenReturn(response);
@@ -47,6 +48,7 @@ class CompareControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.verdict").value("STRUCTURALLY_MATCHED"))
-                .andExpect(jsonPath("$.matchPercent").value(90));
+                .andExpect(jsonPath("$.matchPercent").value(90))
+                .andExpect(jsonPath("$.mismatchPercent").value(10));
     }
 }

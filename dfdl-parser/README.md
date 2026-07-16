@@ -2,6 +2,8 @@
 
 Spring Boot REST service that accepts an **IBM ACE / EDIFACT binary** (`.bin`), parses it with **Apache Daffodil** using DFDL XSD schemas, maps the result into a **seat-map request JSON**, and returns that JSON in the API response. It also **unparses** seat-map **response** JSON back to an SMPRES `.bin`.
 
+Use **`POST /process`** for the full pipeline: parse request `.bin` → call external seat-map API → unparse response → SMPRES `.bin`.
+
 For a full design of parse/unparse (classes, schemas, field maps, edge cases, sample files), see **[TECHNICAL_DESIGN.md](./TECHNICAL_DESIGN.md)**.
 
 ---
@@ -147,7 +149,50 @@ For each `/parse` call:
 
 ---
 
-## 4. Reverse flow — JSON → binary (`POST /unparse`)
+## 4. Full pipeline — bin → seatmap → bin (`POST /process`)
+
+```
+Client
+  │  POST /process  (multipart field "file" = Request_SMPREQ_1.bin)
+  ▼
+Parse (internal)          → seat-map request JSON
+  ▼
+POST {seat-map-api-url}   → seat-map response JSON
+  (default http://localhost:9000/api/seatmap)
+  ▼
+Unparse (internal)        → SMPRES.bin (EBCDIC IBM037)
+  ▼
+HTTP 200  application/octet-stream
+```
+
+`/parse` and `/unparse` stay available as separate steps. `/process` runs them plus the seat-map call in one request.
+
+### Call
+
+```bash
+curl -X POST http://localhost:8080/process \
+  -F "file=@./samples/Request_SMPREQ_1.bin;type=application/octet-stream" \
+  --output SMPRES.bin
+```
+
+Or from a sample already in the container:
+
+```bash
+curl -X POST http://localhost:8080/process/sample/Request_SMPREQ_1.bin \
+  --output SMPRES.bin
+```
+
+### Config
+
+| Property / env | Default | Notes |
+|----------------|---------|--------|
+| `daffodil.seat-map-api-url` / `SEATMAP_API_URL` | `http://localhost:9000/api/seatmap` | In Docker Compose set to `http://host.docker.internal:9000/api/seatmap` so the container can reach the API on your host |
+
+Require the seat-map service on port **9000** to be running before calling `/process`.
+
+---
+
+## 5. Reverse flow — JSON → binary (`POST /unparse`)
 
 ```
 Client
@@ -264,21 +309,25 @@ Expected when ready:
 
 ---
 
-## 5. Components involved
+## 6. Components involved
 
 | Layer | Class | Responsibility |
 |-------|--------|----------------|
 | API | `ParserController` | Accepts multipart binary, returns `ParseResponse` |
+| API | `ProcessController` | Full pipeline: parse → seatmap API → unparse → `.bin` |
+| API | `UnparseController` | Seat-map response JSON → SMPRES `.bin` |
 | Parse | `DaffodilParserService` | Compiles schema once; parses binary with Daffodil |
+| Pipeline | `SeatMapPipelineService` / `SeatMapApiClient` | Orchestrates external seat-map call |
 | Convert | `XmlJsonConverter` | XML infoset → JSON |
 | Map | `SeatMapRequestMapper` | DFDL JSON → seat-map request JSON |
+| Map | `SeatMapResponseMapper` | Seat-map response JSON → SMPRES XML |
 | DTO | `ParseResponse` / `SeatMapRequest` | Response and mapped payload shapes |
 | Errors | `GlobalExceptionHandler` | Structured JSON errors |
-| Config | `application.yml` / `DaffodilConfiguration` | Schema path, channel defaults, logging |
+| Config | `application.yml` / `DaffodilConfiguration` | Schema path, channel defaults, seatmap URL |
 
 ---
 
-## 6. Running the application
+## 7. Running the application
 
 ### Docker (recommended)
 
@@ -286,20 +335,32 @@ Host needs **only Docker Desktop** (no Java/Maven on the host).
 
 ```bash
 cd dfdl-parser
-docker compose up --build
+docker compose up --build -d
 ```
 
-API base URL: [http://localhost:8080](http://localhost:8080)
+API base URL: [http://127.0.0.1:8080](http://127.0.0.1:8080)
 
-| Host folder | Container path |
-|-------------|----------------|
-| `./schemas` | `/app/schema` |
-| `./samples` | `/app/samples` |
+| Host folder | Container path | Live without rebuild? |
+|-------------|----------------|------------------------|
+| `./schemas` | `/app/schema` | Yes — then `docker compose restart` to recompile schemas |
+| `./samples` | `/app/samples` | Yes — immediate |
+| `./src/main/resources/static` | `/app/static` | Yes — UI HTML/CSS/JS; hard-refresh browser (`Ctrl+F5`) |
 
-After changing XSDs:
+### Do I need `--build` every time?
+
+| What you changed | Command needed |
+|------------------|----------------|
+| UI (`static/ui/compare.html`, CSS/JS) | **Nothing** — save file, hard-refresh browser |
+| Sample `.bin` / JSON under `samples/` | **Nothing** — already mounted |
+| DFDL XSD under `schemas/` | `docker compose restart` (no rebuild) |
+| Java code (controllers, services, mappers) | `docker compose up --build -d` |
+
+**Why?** Java is compiled into the JAR inside the image. Schemas/samples/UI are mounted from your PC, so those updates do not need a full image rebuild.
+
+First time after pulling this compose change (static volume), run once:
 
 ```bash
-docker compose restart
+docker compose up --build -d
 ```
 
 ### Other useful APIs
@@ -307,11 +368,28 @@ docker compose restart
 | Method | URL | Purpose |
 |--------|-----|---------|
 | `GET` | `/health` | Request + response schema compile status |
+| `GET` | `/ui/compare` | Browser UI for binary compare (upload + formatted JSON) |
 | `POST` | `/parse` | Binary → mapped seat-map **request** JSON |
 | `POST` | `/parse/sample/{fileName}` | Parse file from `/app/samples` |
+| `POST` | `/process` | Request `.bin` → seatmap API → response `.bin` |
+| `POST` | `/process/sample/{fileName}` | Same pipeline using a sample request `.bin` |
 | `POST` | `/unparse` | Seat-map **response** JSON → SMPRES `.bin` |
 | `POST` | `/compare` | Compare client SMPRES `.bin` vs unparse `.bin` |
 | `POST` | `/diagnose` | ACE/Daffodil compile (+ optional parse) diagnostics |
+
+### Compare UI (browser)
+
+Open:
+
+[http://127.0.0.1:8080/ui/compare](http://127.0.0.1:8080/ui/compare)
+
+1. Upload **client shared** `.bin` (e.g. `Response_SMPRES_4.bin`)
+2. Upload **unparse output** `.bin` (e.g. `SMPRES.bin`)
+3. Click **Compare** — calls `POST /compare` and shows:
+   - Verdict / match % / mismatch %
+   - **Mismatched values** table (`path`, client vs unparse)
+   - Pretty-printed **Client JSON** and **Unparse JSON**
+   - Full API response + checks
 
 ### Compare client binary vs unparse binary
 
@@ -326,13 +404,67 @@ curl.exe -X POST http://127.0.0.1:8080/compare ^
 Response includes:
 - `verdict` — `IDENTICAL` / `STRUCTURALLY_MATCHED` / `PARTIAL_MATCH` / `MISMATCH`
 - `matchPercent` — share of checks passed
+- `mismatchPercent` — remaining percent that did not match (`100 - matchPercent`)
+- `clientJson` / `unparseJson` — both binaries extracted to readable JSON (envelope, flight, aircraft, cabin, rows)
+- `mismatchedValues` — field-level diffs with `path`, `clientValue`, `unparseValue`, `category`, `explanation`
+- `mismatchDetails` — present when not 100%; failed checks + why + same `mismatchedValues`
 - `matches` / `differences` — human-readable lists
 - `checks` — encoding, message type, TVL/EQI/CBD/UNT exactness, ROD skeleton, etc.
 - `segmentDiffs` — per-segment EXACT / STRUCTURAL_MATCH / CONTENT_DIFF
 
+Example when not fully matched:
+
+```json
+{
+  "matchPercent": 92,
+  "mismatchPercent": 8,
+  "clientJson": {
+    "flight": { "departureAirport": "LAX", "arrivalAirport": "DEN", "flightNumber": "1275" },
+    "envelope": { "UNB": { "interchangeRef": "01735HSGF30001", "time": "0136" } }
+  },
+  "unparseJson": {
+    "flight": { "departureAirport": "LAX", "arrivalAirport": "DEN", "flightNumber": "1275" },
+    "envelope": { "UNB": { "interchangeRef": "25196ea0f99f4a", "time": "1828" } }
+  },
+  "mismatchedValues": [
+    {
+      "path": "envelope.UNB.interchangeRef",
+      "clientValue": "01735HSGF30001",
+      "unparseValue": "25196ea0f99f4a",
+      "category": "TRANSACTION",
+      "explanation": "UNB dynamic fields often differ (recipient/time/refs)"
+    },
+    {
+      "path": "envelope.UNB.time",
+      "clientValue": "0136",
+      "unparseValue": "1828",
+      "category": "TRANSACTION",
+      "explanation": "UNB dynamic fields often differ (recipient/time/refs)"
+    }
+  ],
+  "mismatchDetails": {
+    "failedCheckCount": 1,
+    "totalCheckCount": 12,
+    "reason": "8% of structural checks did not pass (1 of 12 failed). mismatchedValues lists 2 JSON field difference(s).",
+    "failedChecks": [
+      {
+        "check": "byteIdentical",
+        "detail": "Files differ at byte level (expected if different transaction)",
+        "impact": "Not a layout failure by itself — expected when transaction ids, timestamps, or seat inventory differ."
+      }
+    ],
+    "whyNotMatched": [
+      "byteIdentical: Files differ at byte level ...",
+      "field envelope.UNB.interchangeRef: client=01735HSGF30001, unparse=25196ea0f99f4a (TRANSACTION)"
+    ],
+    "mismatchedValues": ["...same as top-level mismatchedValues..."]
+  }
+}
+```
+
 ---
 
-## 7. Configuration
+## 8. Configuration
 
 `src/main/resources/application.yml`:
 
@@ -347,12 +479,13 @@ Response includes:
 | `daffodil.default-currency-code` | `USD` | Fallback `CurrencyCode` |
 | `daffodil.default-class-of-service` | `Y` | Mapped `ClassOfService` |
 | `daffodil.default-pricing` | `true` | Mapped `Pricing` |
+| `daffodil.seat-map-api-url` | `http://localhost:9000/api/seatmap` | External seat-map API for `POST /process` |
 
-Environment overrides: `DAFFODIL_SCHEMA`, `DAFFODIL_SAMPLES_DIR`, `DAFFODIL_CHANNEL_ID`, `SERVER_PORT`, etc.
+Environment overrides: `DAFFODIL_SCHEMA`, `DAFFODIL_SAMPLES_DIR`, `DAFFODIL_CHANNEL_ID`, `SEATMAP_API_URL`, `SERVER_PORT`, etc.
 
 ---
 
-## 8. Folder structure
+## 9. Folder structure
 
 ```
 dfdl-parser/
@@ -379,7 +512,7 @@ dfdl-parser/
 
 ---
 
-## 9. Troubleshooting
+## 10. Troubleshooting
 
 | Symptom | Cause | Action |
 |---------|--------|--------|
@@ -394,7 +527,7 @@ docker compose logs -f dfdl-parser
 
 ---
 
-## 10. Technology stack
+## 11. Technology stack
 
 - Java 21
 - Spring Boot 3.4

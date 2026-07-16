@@ -1,0 +1,1395 @@
+{
+    "source": "unparsefile.bin",
+    "encoding": "IBM037",
+    "sizeBytes": 1491,
+    "segmentCount": 40,
+    "envelope": {
+      "UNB": {
+        "raw": "UNB+IATB:1+UA1SM+1A+260713:0959+25196EA0F99F4A+25196EA0F99F4A+++++T",
+        "syntax": "IATB:1",
+        "sender": "UA1SM",
+        "recipient": "1A",
+        "date": "260713",
+        "time": "0959",
+        "interchangeRef": "25196EA0F99F4A",
+        "applicationRef": "25196EA0F99F4A",
+        "testIndicator": ""
+      },
+      "UNH": {
+        "raw": "UNH+1+SMPRES:93:2:IA+25196EA0F99F4A",
+        "messageRef": "1",
+        "messageType": "SMPRES",
+        "version": "93",
+        "release": "2",
+        "agency": "IA",
+        "accessRef": "25196EA0F99F4A"
+      },
+      "UNT": {
+        "raw": "UNT+38+1",
+        "segmentCount": "38",
+        "messageRef": "1"
+      },
+      "UNZ": {
+        "raw": "UNZ+1+25196EA0F99F4A",
+        "controlCount": "1",
+        "interchangeRef": "25196EA0F99F4A"
+      }
+    },
+    "flight": {
+      "raw": "TVL+211226+LAX+DEN+UA+1275:L",
+      "dateDdmmyy": "211226",
+      "departureDateIso": "2026-12-21",
+      "departureAirport": "LAX",
+      "arrivalAirport": "DEN",
+      "carrier": "UA",
+      "flightNumber": "1275",
+      "characteristic": "L"
+    },
+    "aircraft": {
+      "raw": "EQI++++++B3S",
+      "icr": "B3S"
+    },
+    "cabin": {
+      "raw": "CBD+Y:::Y+007:039++++14:24+A:W+B:9+C:A+D:A+E:9+F:W",
+      "cabinType": "Y",
+      "rowRange": {
+        "first": "007",
+        "last": "039"
+      },
+      "wingRange": {
+        "first": "14",
+        "last": "24"
+      },
+      "columns": [
+        {
+          "column": "A",
+          "description": "W"
+        },
+        {
+          "column": "B",
+          "description": "9"
+        },
+        {
+          "column": "C",
+          "description": "A"
+        },
+        {
+          "column": "D",
+          "description": "A"
+        },
+        {
+          "column": "E",
+          "description": "9"
+        },
+        {
+          "column": "F",
+          "description": "W"
+        }
+      ]
+    },
+    "rows": [
+      {
+        "raw": "ROD+7++A:O:8+B:O:8+C:O:8+D:O:8+E:O:8+F:F:CH",
+        "rowNumber": 7,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+8++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 8,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+9++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 9,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+10++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 10,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+11++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 11,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+12++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 12,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+13+Z",
+        "rowNumber": 13,
+        "rowCharacteristic": "Z",
+        "seats": []
+      },
+      {
+        "raw": "ROD+14++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 14,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+15++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 15,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+16+Z",
+        "rowNumber": 16,
+        "rowCharacteristic": "Z",
+        "seats": []
+      },
+      {
+        "raw": "ROD+17+Z",
+        "rowNumber": 17,
+        "rowCharacteristic": "Z",
+        "seats": []
+      },
+      {
+        "raw": "ROD+18+Z",
+        "rowNumber": 18,
+        "rowCharacteristic": "Z",
+        "seats": []
+      },
+      {
+        "raw": "ROD+19+Z",
+        "rowNumber": 19,
+        "rowCharacteristic": "Z",
+        "seats": []
+      },
+      {
+        "raw": "ROD+20+E+A:F:E:1+B:F:E:1+C:F:E:1+D:F:E:1+E:F:E:1+F:F:E:1",
+        "rowNumber": 20,
+        "rowCharacteristic": "E",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+21+E+A:F:E:1+B:F:E:1+C:F:E:1+D:F:E:1+E:F:E:1+F:F:E:1",
+        "rowNumber": 21,
+        "rowCharacteristic": "E",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "E",
+              "1"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+22++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 22,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+23++A:F:CH+B:O:8+C:O:8+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 23,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+24++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 24,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+25++A:F:CH+B:O:8+C:O:8+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 25,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+26++A:F:CH+B:F:CH+C:F:CH+D:F:CH+E:F:CH+F:F:CH",
+        "rowNumber": 26,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+27++A:F:CH+B:F:9+C:F:CH+D:F:CH+E:F:9+F:F:CH",
+        "rowNumber": 27,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+28++A:F:CH+B:F:9+C:F:CH+D:F:CH+E:F:9+F:F:CH",
+        "rowNumber": 28,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": [
+              "CH"
+            ]
+          }
+        ]
+      },
+      {
+        "raw": "ROD+29++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 29,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+30++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 30,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+31++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 31,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+32++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 32,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+33+Z",
+        "rowNumber": 33,
+        "rowCharacteristic": "Z",
+        "seats": []
+      },
+      {
+        "raw": "ROD+34++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 34,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+35++A:O:8+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 35,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "O",
+            "characteristics": [
+              "8"
+            ]
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+36++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 36,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+37++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 37,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+38++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 38,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      },
+      {
+        "raw": "ROD+39++A:F+B:F:9+C:F+D:F+E:F:9+F:F",
+        "rowNumber": 39,
+        "rowCharacteristic": "",
+        "seats": [
+          {
+            "column": "A",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "B",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "C",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "D",
+            "occupation": "F",
+            "characteristics": []
+          },
+          {
+            "column": "E",
+            "occupation": "F",
+            "characteristics": [
+              "9"
+            ]
+          },
+          {
+            "column": "F",
+            "occupation": "F",
+            "characteristics": []
+          }
+        ]
+      }
+    ],
+    "tagCounts": {
+      "UNB": 1,
+      "UNH": 1,
+      "TVL": 1,
+      "EQI": 1,
+      "CBD": 1,
+      "ROD": 33,
+      "UNT": 1,
+      "UNZ": 1
+    }
+  }

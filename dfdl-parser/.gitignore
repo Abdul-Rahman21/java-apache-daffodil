@@ -8,3 +8,5 @@ target/
 *.log
 .DS_Store
 *.class
+node_modules/
+package-lock.json

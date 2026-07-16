@@ -7,8 +7,17 @@ services:
     environment:
       DAFFODIL_SCHEMA: /app/schema/CYO_SMPREQ.xsd
       DAFFODIL_SAMPLES_DIR: /app/samples
+      # Reach seat-map API running on the Windows/Mac host at port 9000
+      SEATMAP_API_URL: http://host.docker.internal:9000/api/seatmap
+      # Prefer host-mounted UI over JAR classpath so HTML/CSS/JS edits need no rebuild
+      SPRING_WEB_RESOURCES_STATIC_LOCATIONS: file:/app/static/,classpath:/static/
+      SPRING_WEB_RESOURCES_CACHE_PERIOD: "0"
       LOGGING_LEVEL_COM_EXAMPLE_DFDL: DEBUG
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./schemas:/app/schema
       - ./samples:/app/samples
+      # Live UI edits — change compare.html, hard-refresh browser (no --build)
+      - ./src/main/resources/static:/app/static
     restart: unless-stopped

@@ -328,6 +328,7 @@ If `transactionIdentifiers.cabinCode` is `Y`, only the Y cabin is emitted (J is 
 | Method | Path | In | Out |
 |--------|------|----|-----|
 | `GET` | `/health` | — | Both schemas compile status |
+| `GET` | `/ui/compare` | — | Browser compare UI page |
 | `POST` | `/parse` | multipart `.bin` | Mapped request JSON (+ xml/infoset) |
 | `POST` | `/parse/sample/{fileName}` | sample name | Same as `/parse` |
 | `POST` | `/unparse` | response JSON | `SMPRES.bin` bytes |
@@ -342,6 +343,10 @@ Compares client-shared SMPRES binary vs unparse output (both decoded as EBCDIC I
 |-------|---------|
 | `verdict` | `IDENTICAL` / `STRUCTURALLY_MATCHED` / `PARTIAL_MATCH` / `MISMATCH` |
 | `matchPercent` | % of structural checks passed |
+| `mismatchPercent` | Remaining % that did not match (`100 - matchPercent`) |
+| `clientJson` / `unparseJson` | Both binaries extracted to readable JSON (envelope/flight/aircraft/cabin/rows) |
+| `mismatchedValues` | Field-level diffs: `path`, `clientValue`, `unparseValue`, `category`, `explanation` |
+| `mismatchDetails` | Present when not 100%; failed checks + why/impact + same `mismatchedValues` |
 | `checks` | encoding, messageType, TVL/EQI/CBD/UNT, ROD skeleton, etc. |
 | `matches` / `differences` | Readable lists |
 | `segmentDiffs` | Per-segment status |

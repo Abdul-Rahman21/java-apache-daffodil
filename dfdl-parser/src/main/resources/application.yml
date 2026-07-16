@@ -8,6 +8,12 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  web:
+    resources:
+      # file:/app/static/ is used in Docker (volume mount). Local/dev falls back to classpath.
+      static-locations: ${SPRING_WEB_RESOURCES_STATIC_LOCATIONS:classpath:/static/}
+      cache:
+        period: ${SPRING_WEB_RESOURCES_CACHE_PERIOD:3600}
 
 daffodil:
   schema: ${DAFFODIL_SCHEMA:/app/schema/CYO_SMPREQ.xsd}
@@ -18,6 +24,9 @@ daffodil:
   default-currency-code: ${DAFFODIL_CURRENCY:USD}
   default-class-of-service: ${DAFFODIL_CLASS_OF_SERVICE:Y}
   default-pricing: ${DAFFODIL_PRICING:true}
+  # External seat-map API used by POST /process (parse → seatmap → unparse)
+  # From Docker Desktop on Windows/Mac use host.docker.internal to reach the host.
+  seat-map-api-url: ${SEATMAP_API_URL:http://localhost:9000/api/seatmap}
 
 logging:
   level:

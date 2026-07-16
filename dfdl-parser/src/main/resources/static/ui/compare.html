@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMPRES Binary Compare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #0b1220;
+      --bg1: #121c2f;
+      --panel: rgba(18, 28, 47, 0.9);
+      --line: rgba(148, 178, 214, 0.18);
+      --text: #e8eef7;
+      --muted: #93a4bd;
+      --accent: #2dd4bf;
+      --accent-dim: rgba(45, 212, 191, 0.14);
+      --warn: #fbbf24;
+      --bad: #fb7185;
+      --good: #4ade80;
+      --client: #7dd3fc;
+      --unparse: #f9a8d4;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Outfit", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(45, 212, 191, 0.18), transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, rgba(56, 120, 210, 0.16), transparent 50%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #0a101b);
+    }
+    .wrap { width: min(1240px, calc(100% - 2rem)); margin: 0 auto; padding: 2.25rem 0 4rem; }
+    header { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1.75rem; }
+    header h1 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.35rem); letter-spacing: -0.03em; font-weight: 700; }
+    header p { margin: 0.45rem 0 0; color: var(--muted); max-width: 46rem; line-height: 1.5; }
+    .badge {
+      align-self: start; font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--accent);
+      background: var(--accent-dim); border: 1px solid rgba(45, 212, 191, 0.28); border-radius: 999px; padding: 0.35rem 0.7rem;
+    }
+    .panel {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); backdrop-filter: blur(10px); margin-bottom: 1rem;
+    }
+    .upload { padding: 1.25rem; display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end; }
+    @media (max-width: 900px) {
+      .upload { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: start; }
+    }
+    label.field { display: grid; gap: 0.45rem; }
+    label.field span { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+    .drop {
+      position: relative; border: 1px dashed rgba(148, 178, 214, 0.35); background: rgba(10, 16, 27, 0.55);
+      border-radius: 12px; min-height: 96px; padding: 0.9rem 1rem; display: flex; flex-direction: column; justify-content: center;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .drop:hover, .drop.drag { border-color: var(--accent); background: rgba(45, 212, 191, 0.06); transform: translateY(-1px); }
+    .drop strong { font-size: 0.95rem; font-weight: 600; }
+    .drop small { color: var(--muted); margin-top: 0.2rem; font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; }
+    .drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    button.primary {
+      appearance: none; border: 0; border-radius: 12px;
+      background: linear-gradient(135deg, #2dd4bf, #14b8a6 55%, #0d9488); color: #042f2e;
+      font: 600 0.95rem "Outfit", sans-serif; padding: 0.95rem 1.35rem; cursor: pointer; min-width: 140px;
+      box-shadow: 0 10px 24px rgba(45, 212, 191, 0.25);
+    }
+    button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+    .status { min-height: 1.25rem; color: var(--muted); font-size: 0.9rem; padding: 0 1.25rem 1rem; }
+    .status.error { color: var(--bad); }
+    .results { display: none; }
+    .results.show { display: block; animation: rise 0.45s ease both; }
+    .summary { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.85rem; padding: 1.1rem; }
+    @media (max-width: 900px) { .summary { grid-template-columns: 1fr 1fr; } }
+    .metric {
+      background: rgba(10, 16, 27, 0.5); border: 1px solid var(--line); border-radius: 12px; padding: 0.9rem 1rem;
+    }
+    .metric .k { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .metric .v { margin-top: 0.35rem; font-size: 1.15rem; font-weight: 700; font-family: "IBM Plex Mono", monospace; }
+    .metric .v.good { color: var(--good); } .metric .v.warn { color: var(--warn); } .metric .v.bad { color: var(--bad); }
+    .overview {
+      margin: 0 1.1rem 1.1rem; padding: 1rem 1.1rem; border-radius: 12px;
+      background: rgba(10, 16, 27, 0.45); border: 1px solid var(--line);
+    }
+    .overview h3 { margin: 0 0 0.45rem; font-size: 0.95rem; }
+    .overview p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 0.92rem; }
+    .overview ul { margin: 0.7rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+    .overview li { margin: 0.25rem 0; line-height: 1.4; }
+    .tabs {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0 1.1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .tab {
+      appearance: none; border: 0; background: transparent; color: var(--muted);
+      font: 500 0.88rem "Outfit", sans-serif; padding: 0.85rem 0.8rem; cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; padding: 1.1rem; }
+    .tab-panel.active { display: block; }
+    .hint { color: var(--muted); font-size: 0.88rem; margin: 0 0 0.9rem; line-height: 1.45; }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.9rem; }
+    .chip {
+      appearance: none; border: 1px solid var(--line); background: rgba(10, 16, 27, 0.45);
+      color: var(--muted); border-radius: 999px; padding: 0.35rem 0.7rem; font: 500 0.78rem "Outfit", sans-serif; cursor: pointer;
+    }
+    .chip.active { color: var(--text); border-color: rgba(45, 212, 191, 0.45); background: var(--accent-dim); }
+    .diff-card {
+      border: 1px solid var(--line); border-radius: 12px; background: rgba(10, 16, 27, 0.45);
+      padding: 0.9rem 1rem; margin-bottom: 0.7rem;
+    }
+    .diff-card.hidden { display: none; }
+    .diff-head { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: space-between; margin-bottom: 0.65rem; }
+    .diff-path { font-family: "IBM Plex Mono", monospace; color: var(--accent); font-size: 0.88rem; word-break: break-all; }
+    .diff-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;
+    }
+    @media (max-width: 720px) { .diff-grid { grid-template-columns: 1fr; } }
+    .side {
+      border-radius: 10px; padding: 0.7rem 0.8rem; border: 1px solid var(--line); background: #070c14;
+    }
+    .side.client { border-color: rgba(125, 211, 252, 0.28); }
+    .side.unparse { border-color: rgba(249, 168, 212, 0.28); }
+    .side .label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; font-weight: 600;
+    }
+    .side.client .label { color: var(--client); }
+    .side.unparse .label { color: var(--unparse); }
+    .side .value {
+      font-family: "IBM Plex Mono", monospace; font-size: 0.82rem; word-break: break-word; line-height: 1.45; white-space: pre-wrap;
+    }
+    .side .value.changed { color: var(--warn); }
+    .side .value.missing { color: var(--bad); }
+    .explain { margin-top: 0.65rem; color: var(--muted); font-size: 0.84rem; line-height: 1.45; }
+    .cat {
+      display: inline-block; font-size: 0.72rem; font-family: "IBM Plex Mono", monospace;
+      padding: 0.15rem 0.45rem; border-radius: 999px; background: rgba(148, 178, 214, 0.12); color: var(--muted);
+    }
+    .cat.TRANSACTION { color: var(--warn); background: rgba(251, 191, 36, 0.12); }
+    .cat.LAYOUT, .cat.STRUCTURE { color: var(--bad); background: rgba(251, 113, 133, 0.12); }
+    .cat.SEATMAP { color: #7dd3fc; background: rgba(125, 211, 252, 0.12); }
+    .cat.METADATA { color: var(--muted); }
+    .group-title {
+      margin: 1rem 0 0.55rem; font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    @media (max-width: 900px) { .pair-grid { grid-template-columns: 1fr; } }
+    .pair-box {
+      border: 1px solid var(--line); border-radius: 12px; background: rgba(10, 16, 27, 0.45); overflow: hidden;
+    }
+    .pair-box h4 {
+      margin: 0; padding: 0.7rem 0.9rem; font-size: 0.85rem; border-bottom: 1px solid var(--line);
+      display: flex; justify-content: space-between; gap: 0.5rem; align-items: center;
+    }
+    .pair-box h4 span.tag { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+    .kv { padding: 0.35rem 0.9rem 0.8rem; }
+    .kv-row {
+      display: grid; grid-template-columns: 140px 1fr; gap: 0.5rem; padding: 0.38rem 0;
+      border-bottom: 1px solid rgba(148, 178, 214, 0.08); font-size: 0.84rem;
+    }
+    .kv-row:last-child { border-bottom: 0; }
+    .kv-row .k { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 0.76rem; }
+    .kv-row .v { font-family: "IBM Plex Mono", monospace; word-break: break-word; }
+    .kv-row.diff .v { color: var(--warn); }
+    .kv-row.match .v { color: var(--good); }
+    .check-grid { display: grid; gap: 0.55rem; }
+    .check-item {
+      display: grid; grid-template-columns: 28px 160px 1fr; gap: 0.7rem; align-items: start;
+      padding: 0.75rem 0.85rem; border-radius: 10px; border: 1px solid var(--line); background: rgba(10, 16, 27, 0.4);
+    }
+    @media (max-width: 720px) { .check-item { grid-template-columns: 28px 1fr; } .check-item .name { grid-column: 2; } .check-item .detail { grid-column: 2; } }
+    .dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 0.25rem; }
+    .dot.pass { background: var(--good); box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15); }
+    .dot.fail { background: var(--bad); box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.15); }
+    .check-item .name { font-family: "IBM Plex Mono", monospace; font-size: 0.82rem; color: var(--accent); }
+    .check-item .detail { color: var(--muted); font-size: 0.84rem; line-height: 1.4; }
+    .check-item .impact { display: block; margin-top: 0.35rem; color: var(--warn); font-size: 0.8rem; }
+    table.seg { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    table.seg th, table.seg td {
+      text-align: left; vertical-align: top; padding: 0.65rem 0.55rem; border-bottom: 1px solid var(--line);
+    }
+    table.seg th { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+    table.seg td.mono { font-family: "IBM Plex Mono", monospace; word-break: break-word; max-width: 280px; }
+    .status-pill {
+      display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 0.7rem;
+      padding: 0.15rem 0.45rem; border-radius: 999px;
+    }
+    .status-pill.EXACT, .status-pill.STRUCTURAL_MATCH { color: var(--good); background: rgba(74, 222, 128, 0.12); }
+    .status-pill.CONTENT_DIFF, .status-pill.TAG_MISMATCH { color: var(--bad); background: rgba(251, 113, 133, 0.12); }
+    .status-pill.EXTRA_IN_UNPARSE, .status-pill.MISSING_IN_UNPARSE { color: var(--warn); background: rgba(251, 191, 36, 0.12); }
+    .json-box {
+      margin: 0; padding: 1rem; overflow: auto; max-height: 62vh; border-radius: 12px; background: #070c14;
+      border: 1px solid var(--line); font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; line-height: 1.55; white-space: pre;
+    }
+    .json-key { color: #7dd3fc; } .json-string { color: #86efac; } .json-number { color: #fcd34d; }
+    .json-bool { color: #f9a8d4; } .json-null { color: #94a3b8; }
+    .toolbar { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .ghost {
+      appearance: none; border: 1px solid var(--line); background: rgba(10, 16, 27, 0.45); color: var(--text);
+      border-radius: 10px; padding: 0.45rem 0.75rem; font: 500 0.8rem "Outfit", sans-serif; cursor: pointer;
+    }
+    .empty { color: var(--muted); padding: 1.5rem 0.25rem; text-align: center; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>SMPRES Binary Compare</h1>
+        <p>
+          Upload client-shared and unparse binaries. The UI calls <code>POST /compare</code> and shows
+          side-by-side values, why each field differs, failed checks, and segment diffs.
+        </p>
+      </div>
+      <div class="badge">GET /ui/compare</div>
+    </header>
+
+    <section class="panel">
+      <form class="upload" id="compareForm">
+        <label class="field">
+          <span>Client shared file</span>
+          <div class="drop" id="clientDrop">
+            <strong id="clientLabel">Choose Response_SMPRES_4.bin</strong>
+            <small>multipart field: clientFile</small>
+            <input id="clientFile" name="clientFile" type="file" accept=".bin,application/octet-stream" required />
+          </div>
+        </label>
+        <label class="field">
+          <span>Unparse output file</span>
+          <div class="drop" id="unparseDrop">
+            <strong id="unparseLabel">Choose SMPRES.bin</strong>
+            <small>multipart field: unparseFile</small>
+            <input id="unparseFile" name="unparseFile" type="file" accept=".bin,application/octet-stream" required />
+          </div>
+        </label>
+        <button class="primary" id="submitBtn" type="submit">Compare</button>
+      </form>
+      <div class="status" id="status"></div>
+    </section>
+
+    <section class="panel results" id="results">
+      <div class="summary" id="summary"></div>
+      <div class="overview" id="overview"></div>
+
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="detail">Not matching (detailed)</button>
+        <button type="button" class="tab" data-tab="side">Side-by-side fields</button>
+        <button type="button" class="tab" data-tab="checks">Failed / passed checks</button>
+        <button type="button" class="tab" data-tab="segments">Segment diffs</button>
+        <button type="button" class="tab" data-tab="client">Client JSON</button>
+        <button type="button" class="tab" data-tab="unparse">Unparse JSON</button>
+        <button type="button" class="tab" data-tab="full">Full API response</button>
+      </div>
+
+      <div class="tab-panel active" id="panel-detail">
+        <p class="hint">Every mismatched field with client vs unparse values and explanation. Filter by category.</p>
+        <div class="filters" id="filters"></div>
+        <div id="detailCards"></div>
+      </div>
+
+      <div class="tab-panel" id="panel-side">
+        <p class="hint">Key envelope / flight / aircraft / cabin fields compared side-by-side. Yellow = different, green = same.</p>
+        <div id="sideBySide"></div>
+      </div>
+
+      <div class="tab-panel" id="panel-checks">
+        <p class="hint">Structural checks from the compare API, with impact text for failures.</p>
+        <div class="check-grid" id="checksList"></div>
+      </div>
+
+      <div class="tab-panel" id="panel-segments">
+        <p class="hint">EDIFACT segments that are not exact matches (CONTENT_DIFF, STRUCTURAL_MATCH, missing/extra).</p>
+        <div id="segmentTable"></div>
+      </div>
+
+      <div class="tab-panel" id="panel-client">
+        <div class="toolbar"><button type="button" class="ghost" data-copy="clientJson">Copy JSON</button></div>
+        <pre class="json-box" id="clientJson"></pre>
+      </div>
+      <div class="tab-panel" id="panel-unparse">
+        <div class="toolbar"><button type="button" class="ghost" data-copy="unparseJson">Copy JSON</button></div>
+        <pre class="json-box" id="unparseJson"></pre>
+      </div>
+      <div class="tab-panel" id="panel-full">
+        <div class="toolbar"><button type="button" class="ghost" data-copy="fullJson">Copy JSON</button></div>
+        <pre class="json-box" id="fullJson"></pre>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById("compareForm");
+    const statusEl = document.getElementById("status");
+    const results = document.getElementById("results");
+    const submitBtn = document.getElementById("submitBtn");
+    let activeFilter = "ALL";
+    let lastMismatches = [];
+
+    function wireDrop(dropId, inputId, labelId) {
+      const drop = document.getElementById(dropId);
+      const input = document.getElementById(inputId);
+      const label = document.getElementById(labelId);
+      ["dragenter", "dragover"].forEach((evt) => drop.addEventListener(evt, (e) => { e.preventDefault(); drop.classList.add("drag"); }));
+      ["dragleave", "drop"].forEach((evt) => drop.addEventListener(evt, (e) => { e.preventDefault(); drop.classList.remove("drag"); }));
+      drop.addEventListener("drop", (e) => {
+        if (e.dataTransfer.files?.length) {
+          input.files = e.dataTransfer.files;
+          label.textContent = e.dataTransfer.files[0].name;
+        }
+      });
+      input.addEventListener("change", () => {
+        label.textContent = input.files?.[0]?.name || label.dataset.placeholder || "Choose file";
+      });
+      label.dataset.placeholder = label.textContent;
+    }
+    wireDrop("clientDrop", "clientFile", "clientLabel");
+    wireDrop("unparseDrop", "unparseFile", "unparseLabel");
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+      });
+    });
+
+    document.querySelectorAll("[data-copy]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const text = document.getElementById(btn.getAttribute("data-copy"))?.innerText || "";
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = "Copied";
+          setTimeout(() => { btn.textContent = "Copy JSON"; }, 1200);
+        } catch (_) { btn.textContent = "Copy failed"; }
+      });
+    });
+
+    function verdictClass(v) {
+      if (v === "IDENTICAL" || v === "STRUCTURALLY_MATCHED") return "good";
+      if (v === "PARTIAL_MATCH") return "warn";
+      return "bad";
+    }
+    function escapeHtml(v) {
+      return String(v ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+    }
+    function formatValue(v) {
+      if (v === null || v === undefined || v === "") return "(empty)";
+      if (typeof v === "object") return JSON.stringify(v, null, 2);
+      return String(v);
+    }
+    function syntaxHighlight(json) {
+      const text = typeof json === "string" ? json : JSON.stringify(json, null, 2);
+      return escapeHtml(text).replace(
+        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+        (match) => {
+          let cls = "json-number";
+          if (/^"/.test(match)) cls = /:$/.test(match) ? "json-key" : "json-string";
+          else if (/true|false/.test(match)) cls = "json-bool";
+          else if (/null/.test(match)) cls = "json-null";
+          return '<span class="' + cls + '">' + match + "</span>";
+        }
+      );
+    }
+    function get(obj, path) {
+      if (!obj) return undefined;
+      return path.split(".").reduce((acc, key) => (acc == null ? undefined : acc[key]), obj);
+    }
+
+    function renderSummary(data) {
+      const match = data.matchPercent ?? 0;
+      const mismatch = data.mismatchPercent ?? (100 - match);
+      const failed = data.mismatchDetails?.failedCheckCount ?? Object.values(data.checks || {}).filter((c) => !c.passed).length;
+      document.getElementById("summary").innerHTML = `
+        <div class="metric"><div class="k">Verdict</div><div class="v ${verdictClass(data.verdict)}">${escapeHtml(data.verdict || "-")}</div></div>
+        <div class="metric"><div class="k">Match %</div><div class="v good">${match}%</div></div>
+        <div class="metric"><div class="k">Not match %</div><div class="v ${mismatch > 0 ? "warn" : "good"}">${mismatch}%</div></div>
+        <div class="metric"><div class="k">Failed checks</div><div class="v ${failed ? "bad" : "good"}">${failed}</div></div>
+        <div class="metric"><div class="k">Field diffs</div><div class="v">${(data.mismatchedValues || []).length}</div></div>
+      `;
+    }
+
+    function renderOverview(data) {
+      const md = data.mismatchDetails;
+      const why = (md?.whyNotMatched || []).slice(0, 10);
+      const files = `
+        <strong>${escapeHtml(data.clientFile?.fileName || "client")}</strong>
+        (${data.clientFile?.sizeBytes ?? "?"} B, ${data.clientFile?.segmentCount ?? "?"} segs)
+        vs
+        <strong>${escapeHtml(data.unparseFile?.fileName || "unparse")}</strong>
+        (${data.unparseFile?.sizeBytes ?? "?"} B, ${data.unparseFile?.segmentCount ?? "?"} segs)
+      `;
+      document.getElementById("overview").innerHTML = `
+        <h3>What this means</h3>
+        <p>${escapeHtml(data.summary || "")}</p>
+        <p style="margin-top:0.55rem">${files}</p>
+        ${md?.reason ? `<p style="margin-top:0.55rem"><strong>Reason:</strong> ${escapeHtml(md.reason)}</p>` : ""}
+        ${why.length ? `<ul>${why.map((w) => `<li>${escapeHtml(w)}</li>`).join("")}</ul>` : "<p style='margin-top:0.55rem;color:var(--good)'>No mismatch details — full alignment.</p>"}
+      `;
+    }
+
+    function renderFilters(list) {
+      const cats = ["ALL", ...new Set(list.map((i) => i.category || "OTHER"))];
+      document.getElementById("filters").innerHTML = cats.map((c) => {
+        const count = c === "ALL" ? list.length : list.filter((i) => (i.category || "OTHER") === c).length;
+        return `<button type="button" class="chip ${activeFilter === c ? "active" : ""}" data-filter="${escapeHtml(c)}">${escapeHtml(c)} (${count})</button>`;
+      }).join("");
+      document.querySelectorAll("[data-filter]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          activeFilter = btn.getAttribute("data-filter");
+          renderDetailCards(lastMismatches);
+          renderFilters(lastMismatches);
+        });
+      });
+    }
+
+    function renderDetailCards(list) {
+      lastMismatches = list || [];
+      const host = document.getElementById("detailCards");
+      if (!lastMismatches.length) {
+        host.innerHTML = '<div class="empty">No field-level mismatches — both extracted JSONs align.</div>';
+        return;
+      }
+      const grouped = {};
+      lastMismatches.forEach((item) => {
+        const cat = item.category || "OTHER";
+        (grouped[cat] ||= []).push(item);
+      });
+      let html = "";
+      Object.keys(grouped).forEach((cat) => {
+        const items = grouped[cat].filter((i) => activeFilter === "ALL" || (i.category || "OTHER") === activeFilter);
+        if (!items.length) return;
+        html += `<div class="group-title">${escapeHtml(cat)} — ${items.length} difference(s)</div>`;
+        items.forEach((item) => {
+          const cEmpty = item.clientValue === null || item.clientValue === undefined || item.clientValue === "";
+          const uEmpty = item.unparseValue === null || item.unparseValue === undefined || item.unparseValue === "";
+          html += `
+            <article class="diff-card" data-cat="${escapeHtml(item.category || "OTHER")}">
+              <div class="diff-head">
+                <div class="diff-path">${escapeHtml(item.path)}</div>
+                <span class="cat ${escapeHtml(item.category || "")}">${escapeHtml(item.category || "")}</span>
+              </div>
+              <div class="diff-grid">
+                <div class="side client">
+                  <div class="label">Client shared file</div>
+                  <div class="value ${cEmpty ? "missing" : "changed"}">${escapeHtml(formatValue(item.clientValue))}</div>
+                </div>
+                <div class="side unparse">
+                  <div class="label">Unparse output</div>
+                  <div class="value ${uEmpty ? "missing" : "changed"}">${escapeHtml(formatValue(item.unparseValue))}</div>
+                </div>
+              </div>
+              <div class="explain"><strong>Why:</strong> ${escapeHtml(item.explanation || "Values differ between the two binaries.")}</div>
+            </article>
+          `;
+        });
+      });
+      host.innerHTML = html || '<div class="empty">No differences in this category.</div>';
+    }
+
+    function renderSideBySide(data) {
+      const client = data.clientJson || {};
+      const unparse = data.unparseJson || {};
+      const sections = [
+        { title: "UNB (interchange header)", prefix: "envelope.UNB", keys: ["sender", "recipient", "date", "time", "interchangeRef", "applicationRef", "testIndicator", "syntax", "raw"] },
+        { title: "UNH (message header)", prefix: "envelope.UNH", keys: ["messageType", "version", "release", "agency", "accessRef", "messageRef", "raw"] },
+        { title: "UNT / UNZ (trailers)", prefix: null, custom: [
+          ["envelope.UNT.segmentCount", "UNT segmentCount"],
+          ["envelope.UNT.messageRef", "UNT messageRef"],
+          ["envelope.UNZ.interchangeRef", "UNZ interchangeRef"],
+          ["envelope.UNZ.controlCount", "UNZ controlCount"]
+        ]},
+        { title: "Flight (TVL)", prefix: "flight", keys: ["departureAirport", "arrivalAirport", "carrier", "flightNumber", "departureDateIso", "dateDdmmyy", "characteristic", "raw"] },
+        { title: "Aircraft (EQI)", prefix: "aircraft", keys: ["icr", "raw"] },
+        { title: "Cabin (CBD)", prefix: "cabin", keys: ["cabinType", "rowRange", "wingRange", "columns", "raw"] }
+      ];
+
+      let html = "";
+      sections.forEach((sec) => {
+        const rows = [];
+        if (sec.custom) {
+          sec.custom.forEach(([path, label]) => rows.push({ path, label }));
+        } else {
+          sec.keys.forEach((k) => rows.push({ path: sec.prefix + "." + k, label: k }));
+        }
+        const leftRows = rows.map(({ path, label }) => {
+          const cv = get(client, path);
+          const uv = get(unparse, path);
+          const same = JSON.stringify(cv) === JSON.stringify(uv);
+          return `<div class="kv-row ${same ? "match" : "diff"}"><div class="k">${escapeHtml(label)}</div><div class="v">${escapeHtml(formatValue(cv))}</div></div>`;
+        }).join("");
+        const rightRows = rows.map(({ path, label }) => {
+          const cv = get(client, path);
+          const uv = get(unparse, path);
+          const same = JSON.stringify(cv) === JSON.stringify(uv);
+          return `<div class="kv-row ${same ? "match" : "diff"}"><div class="k">${escapeHtml(label)}</div><div class="v">${escapeHtml(formatValue(uv))}</div></div>`;
+        }).join("");
+        const diffCount = rows.filter(({ path }) => JSON.stringify(get(client, path)) !== JSON.stringify(get(unparse, path))).length;
+        html += `
+          <div class="group-title">${escapeHtml(sec.title)} — ${diffCount} different / ${rows.length} fields</div>
+          <div class="pair-grid">
+            <div class="pair-box">
+              <h4>Client shared <span class="tag">${escapeHtml(data.clientFile?.fileName || "")}</span></h4>
+              <div class="kv">${leftRows}</div>
+            </div>
+            <div class="pair-box">
+              <h4>Unparse output <span class="tag">${escapeHtml(data.unparseFile?.fileName || "")}</span></h4>
+              <div class="kv">${rightRows}</div>
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById("sideBySide").innerHTML = html;
+    }
+
+    function renderChecks(data) {
+      const checks = data.checks || {};
+      const failedMap = {};
+      (data.mismatchDetails?.failedChecks || []).forEach((f) => { failedMap[f.check] = f; });
+      const html = Object.entries(checks).map(([name, result]) => {
+        const failed = failedMap[name];
+        return `
+          <div class="check-item">
+            <div class="dot ${result.passed ? "pass" : "fail"}"></div>
+            <div class="name">${escapeHtml(name)}</div>
+            <div class="detail">
+              <strong>${result.passed ? "PASSED" : "NOT MATCHED"}</strong> — ${escapeHtml(result.detail || "")}
+              ${failed?.impact ? `<span class="impact">Impact: ${escapeHtml(failed.impact)}</span>` : ""}
+            </div>
+          </div>
+        `;
+      }).join("");
+      document.getElementById("checksList").innerHTML = html || '<div class="empty">No checks returned.</div>';
+    }
+
+    function renderSegments(data) {
+      const diffs = (data.segmentDiffs || []).filter((s) => s.status && s.status !== "EXACT");
+      if (!diffs.length) {
+        document.getElementById("segmentTable").innerHTML = '<div class="empty">No non-exact segment diffs (or only identical segments).</div>';
+        return;
+      }
+      const rows = diffs.map((s) => `
+        <tr>
+          <td>${s.index ?? ""}</td>
+          <td class="mono">${escapeHtml(s.tag || "")}</td>
+          <td><span class="status-pill ${escapeHtml(s.status || "")}">${escapeHtml(s.status || "")}</span></td>
+          <td class="mono">${escapeHtml(s.client || "(missing)")}</td>
+          <td class="mono">${escapeHtml(s.unparse || "(missing)")}</td>
+          <td>${escapeHtml(s.note || "")}</td>
+        </tr>
+      `).join("");
+      document.getElementById("segmentTable").innerHTML = `
+        <table class="seg">
+          <thead>
+            <tr><th>#</th><th>Tag</th><th>Status</th><th>Client</th><th>Unparse</th><th>Note</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function renderPayload(data) {
+      results.classList.add("show");
+      activeFilter = "ALL";
+      renderSummary(data);
+      renderOverview(data);
+      renderDetailCards(data.mismatchedValues || []);
+      renderFilters(data.mismatchedValues || []);
+      renderSideBySide(data);
+      renderChecks(data);
+      renderSegments(data);
+      document.getElementById("clientJson").innerHTML = syntaxHighlight(data.clientJson || {});
+      document.getElementById("unparseJson").innerHTML = syntaxHighlight(data.unparseJson || {});
+      document.getElementById("fullJson").innerHTML = syntaxHighlight(data);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const client = document.getElementById("clientFile").files?.[0];
+      const unparse = document.getElementById("unparseFile").files?.[0];
+      if (!client || !unparse) {
+        statusEl.textContent = "Please select both files.";
+        statusEl.classList.add("error");
+        return;
+      }
+      const body = new FormData();
+      body.append("clientFile", client);
+      body.append("unparseFile", unparse);
+      submitBtn.disabled = true;
+      statusEl.classList.remove("error");
+      statusEl.textContent = "Comparing via POST /compare …";
+      try {
+        const res = await fetch("/compare", { method: "POST", body });
+        const data = await res.json();
+        if (!res.ok || data.success === false) throw new Error(data.error || ("Compare failed (" + res.status + ")"));
+        statusEl.textContent = data.summary || "Compare completed.";
+        renderPayload(data);
+      } catch (err) {
+        statusEl.textContent = err.message || String(err);
+        statusEl.classList.add("error");
+        results.classList.remove("show");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

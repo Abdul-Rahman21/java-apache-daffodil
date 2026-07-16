@@ -30,6 +30,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ParseResponse.failure(ex.getMessage()));
     }
 
+    @ExceptionHandler(SeatMapApiException.class)
+    public ResponseEntity<Map<String, Object>> handleSeatMapApiException(SeatMapApiException ex) {
+        log.warn("Seat-map API call failed: {}", ex.getMessage());
+        Map<String, Object> body = errorBody("SEATMAP_API_ERROR", ex.getMessage(), ex);
+        if (ex.getStatusCode() > 0) {
+            body.put("upstreamStatus", ex.getStatusCode());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(body);
+    }
+
     @ExceptionHandler(DfdlSchemaException.class)
     public ResponseEntity<Map<String, Object>> handleSchemaException(DfdlSchemaException ex) {
         log.error("Schema error: {}", ex.getMessage(), ex);

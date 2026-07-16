@@ -16,6 +16,7 @@ public class DaffodilConfiguration {
         log.info("Application startup: Daffodil request schema path configured as '{}'", properties.getSchema());
         log.info("Application startup: Daffodil response schema path configured as '{}'", properties.getResponseSchema());
         log.info("Application startup: Samples directory configured as '{}'", properties.getSamplesDir());
+        log.info("Application startup: Seat-map API URL configured as '{}'", properties.getSeatMapApiUrl());
     }
 
     @ConfigurationProperties(prefix = "daffodil")
@@ -48,6 +49,12 @@ public class DaffodilConfiguration {
         private String defaultClassOfService = "Y";
 
         private String defaultPricing = "true";
+
+        /**
+         * External seat-map API URL used by {@code POST /process}.
+         * From Docker Desktop use {@code http://host.docker.internal:9000/api/seatmap}.
+         */
+        private String seatMapApiUrl = "http://localhost:9000/api/seatmap";
 
         public String getSchema() {
             return schema;
@@ -111,6 +118,14 @@ public class DaffodilConfiguration {
 
         public void setDefaultPricing(String defaultPricing) {
             this.defaultPricing = defaultPricing;
+        }
+
+        public String getSeatMapApiUrl() {
+            return seatMapApiUrl;
+        }
+
+        public void setSeatMapApiUrl(String seatMapApiUrl) {
+            this.seatMapApiUrl = seatMapApiUrl;
         }
     }
 }

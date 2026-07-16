@@ -17,6 +17,8 @@ public class BinaryCompareResponse {
     private String verdict;
     private String summary;
     private int matchPercent;
+    /** Remaining percent that did not match ({@code 100 - matchPercent}). */
+    private int mismatchPercent;
     private String encoding;
     private FileSummary clientFile;
     private FileSummary unparseFile;
@@ -25,6 +27,16 @@ public class BinaryCompareResponse {
     private List<String> matches = new ArrayList<>();
     private List<String> differences = new ArrayList<>();
     private List<SegmentDiff> segmentDiffs = new ArrayList<>();
+    /**
+     * Present when {@code matchPercent &lt; 100}. Explains which checks failed and why.
+     */
+    private MismatchDetails mismatchDetails;
+    /** JSON extracted from the client binary (EBCDIC → structured fields). */
+    private ExtractedBinaryJson clientJson;
+    /** JSON extracted from the unparse binary (EBCDIC → structured fields). */
+    private ExtractedBinaryJson unparseJson;
+    /** Field-level differences between the two extracted JSONs. */
+    private List<FieldMismatch> mismatchedValues = new ArrayList<>();
     private String error;
 
     public static BinaryCompareResponse failure(String error) {
@@ -64,6 +76,46 @@ public class BinaryCompareResponse {
 
     public void setMatchPercent(int matchPercent) {
         this.matchPercent = matchPercent;
+    }
+
+    public int getMismatchPercent() {
+        return mismatchPercent;
+    }
+
+    public void setMismatchPercent(int mismatchPercent) {
+        this.mismatchPercent = mismatchPercent;
+    }
+
+    public MismatchDetails getMismatchDetails() {
+        return mismatchDetails;
+    }
+
+    public void setMismatchDetails(MismatchDetails mismatchDetails) {
+        this.mismatchDetails = mismatchDetails;
+    }
+
+    public ExtractedBinaryJson getClientJson() {
+        return clientJson;
+    }
+
+    public void setClientJson(ExtractedBinaryJson clientJson) {
+        this.clientJson = clientJson;
+    }
+
+    public ExtractedBinaryJson getUnparseJson() {
+        return unparseJson;
+    }
+
+    public void setUnparseJson(ExtractedBinaryJson unparseJson) {
+        this.unparseJson = unparseJson;
+    }
+
+    public List<FieldMismatch> getMismatchedValues() {
+        return mismatchedValues;
+    }
+
+    public void setMismatchedValues(List<FieldMismatch> mismatchedValues) {
+        this.mismatchedValues = mismatchedValues;
     }
 
     public String getEncoding() {
@@ -230,6 +282,173 @@ public class BinaryCompareResponse {
 
         public void setDetail(String detail) {
             this.detail = detail;
+        }
+    }
+
+    /**
+     * Explains why the compare did not reach 100% match.
+     */
+    public static class MismatchDetails {
+        private int failedCheckCount;
+        private int totalCheckCount;
+        private String reason;
+        private List<FailedCheck> failedChecks = new ArrayList<>();
+        private List<String> whyNotMatched = new ArrayList<>();
+        /** Field-level JSON diffs (same list as top-level mismatchedValues when present). */
+        private List<FieldMismatch> mismatchedValues = new ArrayList<>();
+
+        public int getFailedCheckCount() {
+            return failedCheckCount;
+        }
+
+        public void setFailedCheckCount(int failedCheckCount) {
+            this.failedCheckCount = failedCheckCount;
+        }
+
+        public int getTotalCheckCount() {
+            return totalCheckCount;
+        }
+
+        public void setTotalCheckCount(int totalCheckCount) {
+            this.totalCheckCount = totalCheckCount;
+        }
+
+        public String getReason() {
+            return reason;
+        }
+
+        public void setReason(String reason) {
+            this.reason = reason;
+        }
+
+        public List<FailedCheck> getFailedChecks() {
+            return failedChecks;
+        }
+
+        public void setFailedChecks(List<FailedCheck> failedChecks) {
+            this.failedChecks = failedChecks;
+        }
+
+        public List<String> getWhyNotMatched() {
+            return whyNotMatched;
+        }
+
+        public void setWhyNotMatched(List<String> whyNotMatched) {
+            this.whyNotMatched = whyNotMatched;
+        }
+
+        public List<FieldMismatch> getMismatchedValues() {
+            return mismatchedValues;
+        }
+
+        public void setMismatchedValues(List<FieldMismatch> mismatchedValues) {
+            this.mismatchedValues = mismatchedValues;
+        }
+    }
+
+    public static class FailedCheck {
+        private String check;
+        private String detail;
+        private String impact;
+
+        public FailedCheck() {
+        }
+
+        public FailedCheck(String check, String detail, String impact) {
+            this.check = check;
+            this.detail = detail;
+            this.impact = impact;
+        }
+
+        public String getCheck() {
+            return check;
+        }
+
+        public void setCheck(String check) {
+            this.check = check;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public void setDetail(String detail) {
+            this.detail = detail;
+        }
+
+        public String getImpact() {
+            return impact;
+        }
+
+        public void setImpact(String impact) {
+            this.impact = impact;
+        }
+    }
+
+    /**
+     * One mismatched field after both binaries were extracted to JSON.
+     */
+    public static class FieldMismatch {
+        private String path;
+        private Object clientValue;
+        private Object unparseValue;
+        private String category;
+        private String explanation;
+
+        public FieldMismatch() {
+        }
+
+        public FieldMismatch(
+                String path,
+                Object clientValue,
+                Object unparseValue,
+                String category,
+                String explanation) {
+            this.path = path;
+            this.clientValue = clientValue;
+            this.unparseValue = unparseValue;
+            this.category = category;
+            this.explanation = explanation;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        public Object getClientValue() {
+            return clientValue;
+        }
+
+        public void setClientValue(Object clientValue) {
+            this.clientValue = clientValue;
+        }
+
+        public Object getUnparseValue() {
+            return unparseValue;
+        }
+
+        public void setUnparseValue(Object unparseValue) {
+            this.unparseValue = unparseValue;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getExplanation() {
+            return explanation;
+        }
+
+        public void setExplanation(String explanation) {
+            this.explanation = explanation;
         }
     }
 
